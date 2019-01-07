@@ -11,6 +11,6 @@ defmodule IOTest do
   end
 
   test "format empty board" do
-    assert CLI.format_board(@empty_board) == @formatted_empty_board
+    assert CLI.format_board() == @formatted_empty_board
   end
 end

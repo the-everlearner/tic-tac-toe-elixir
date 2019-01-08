@@ -17,7 +17,7 @@ defmodule BoardTest do
   end
 
   test "returns true if board full" do
-    full_board = List.duplicate(player_one_mark, 9)
+    full_board = List.duplicate(player_one_mark(), 9)
     assert full?(full_board)
   end
 end

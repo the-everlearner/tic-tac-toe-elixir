@@ -31,10 +31,10 @@ defmodule CLI do
 
     square_bracks = Enum.map(formatted_tiles, fn tile -> ~s{[#{tile}] } end)
     with_newlines = square_bracks |> List.insert_at(3, newline()) |> List.insert_at(7, newline())
-    ~s{#{List.to_string(with_newlines)}#{newline}}
+    ~s{#{List.to_string(with_newlines)}#{newline()}}
   end
 
-  def initial_prompt do
+  def display_welcome do
     send_message(welcome())
     send_message(newline())
     send_message(format_board(List.duplicate(empty_mark(), 9)))

@@ -1,7 +1,7 @@
 defmodule TicTacToe do
-  import CLI, only: [initial_prompt: 0]
+  import Game, only: [run_game: 0]
 
   def run do
-    initial_prompt()
+    run_game()
   end
 end

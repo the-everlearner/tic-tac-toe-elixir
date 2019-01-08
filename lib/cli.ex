@@ -34,9 +34,18 @@ defmodule CLI do
     ~s{#{List.to_string(with_newlines)}#{newline()}}
   end
 
-  def display_welcome do
-    send_message(welcome())
+  def display_welcome(board) do
+    send_message(welcome_message())
     send_message(newline())
-    send_message(format_board(List.duplicate(empty_mark(), 9)))
+    send_message(format_board(board))
+    send_message(newline())
+  end
+
+  def turn_end_display(board) do
+    send_message(newline())
+    send_message(choice_made_message())
+    send_message(newline())
+    send_message(format_board(board))
+    send_message(newline())
   end
 end

@@ -7,4 +7,8 @@ defmodule Board do
   def place_mark(board, position, mark) do
     List.replace_at(board, position, mark)
   end
+
+  def full?(board) do
+    !Enum.member?(board, :empty_mark)
+  end
 end

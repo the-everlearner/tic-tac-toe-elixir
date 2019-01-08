@@ -1,8 +1,6 @@
 defmodule Game do
-  import CLI, only: [display_welcome: 1,
-  turn_end_display: 1]
-  import Board, only: [make_initial_board: 0,
-    place_mark: 3]
+  import CLI, only: [display_welcome: 1, turn_end_display: 1]
+  import Board, only: [make_initial_board: 0, place_mark: 3]
   import HumanPlayer, only: [get_tile_choice: 0]
   import Marks
 

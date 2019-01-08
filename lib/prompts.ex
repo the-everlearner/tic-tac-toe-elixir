@@ -5,6 +5,6 @@ defmodule Prompts do
   @ask_tile "Please enter a tile number"
   def ask_tile, do: @ask_tile
 
-  @choice_made_message "And here's the choice"
+  @choice_made_message "Here's the choice!"
   def choice_made_message, do: @choice_made_message
 end

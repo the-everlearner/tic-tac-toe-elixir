@@ -10,6 +10,16 @@ defmodule BoardTest do
              generate_marked_board(@empty_board, [0], player_one_mark())
   end
 
+  test "returns false if game not finished" do
+    refute finished?(@empty_board, player_one_mark())
+  end
+
+  test "returns true if game finished" do
+    won_board = generate_marked_board(@empty_board, [0, 1, 2], player_one_mark())
+
+    assert finished?(won_board, player_one_mark()) == true
+  end
+
   test "returns false if board not full" do
     refute full?(@empty_board)
   end

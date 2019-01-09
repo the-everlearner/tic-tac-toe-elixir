@@ -7,4 +7,8 @@ defmodule Prompts do
 
   @choice_made_message "Here's the choice!"
   def choice_made_message, do: @choice_made_message
+
+  def win_message(mark), do: ~s{"Player #{mark} won!"}
+
+  def tie_message, do: ~s{"It was a tie..."}
 end

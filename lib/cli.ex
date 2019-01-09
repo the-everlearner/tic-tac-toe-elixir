@@ -34,7 +34,7 @@ defmodule CLI do
     ~s{#{List.to_string(with_newlines)}#{newline()}}
   end
 
-  def display_welcome(board) do
+  def announce_welcome(board) do
     send_message(welcome_message())
     send_message(newline())
     send_message(format_board(board))
@@ -46,6 +46,18 @@ defmodule CLI do
     send_message(choice_made_message())
     send_message(newline())
     send_message(format_board(board))
+    send_message(newline())
+  end
+
+  def announce_win(mark) do
+    send_message(newline())
+    send_message(win_message(convert_mark(mark)))
+    send_message(newline())
+  end
+
+  def announce_tie do
+    send_message(newline())
+    send_message(tie_message)
     send_message(newline())
   end
 end

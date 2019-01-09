@@ -8,6 +8,10 @@ defmodule Board do
     List.replace_at(board, position, mark)
   end
 
+  def finished?(board, player_mark) do
+    won?(board, player_mark) || full?(board)
+  end
+
   def full?(board) do
     !Enum.member?(board, :empty_mark)
   end

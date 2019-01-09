@@ -1,9 +1,9 @@
 defmodule HumanPlayer do
-  import Prompts, only: [ask_tile: 0]
+  import Prompts, only: [ask_tile_prompt: 0]
   import Globals, only: [remove_line: 1, newline: 0]
 
   def get_tile_choice do
-    input = IO.gets(ask_tile() <> newline())
+    input = IO.gets(ask_tile_prompt() <> newline())
     convert_choice(input)
   end
 

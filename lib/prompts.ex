@@ -1,14 +1,13 @@
 defmodule Prompts do
-  @welcome_message "Welcome to Tic Tac Toe!"
-  def welcome_message, do: @welcome_message
+  def welcome_prompt, do: ~s{Welcome to Tic Tac Toe!}
 
-  @ask_tile "Please enter a tile number"
-  def ask_tile, do: @ask_tile
+  def ask_mode_prompt, do: ~s{Please enter '1' for human vs human mode or '2' for human vs comp mode}
 
-  @choice_made_message "Here's the choice!"
-  def choice_made_message, do: @choice_made_message
+  def ask_tile_prompt, do: ~s{Please enter a tile number}
 
-  def win_message(mark), do: ~s{"Player #{mark} won!"}
+  def choice_made_prompt, do: ~s{Here's the choice!}
 
-  def tie_message, do: ~s{"It was a tie..."}
+  def win_prompt(mark), do: ~s{Player #{mark} won!}
+
+  def tie_prompt, do: ~s{It was a tie...}
 end

@@ -1,7 +1,7 @@
 defmodule CLI do
   import Prompts
   import Marks
-  import Globals, only: [newline: 0]
+  import Globals, only: [newline: 0, remove_line: 1]
 
   defp convert_mark(mark) do
     case mark do
@@ -35,15 +35,22 @@ defmodule CLI do
   end
 
   def announce_welcome(board) do
-    send_message(welcome_message())
+    send_message(welcome_prompt())
     send_message(newline())
     send_message(format_board(board))
     send_message(newline())
   end
 
+  def ask_mode do
+    send_message(newline())
+    send_message(ask_mode_prompt())
+    send_message(newline())
+    String.to_integer(remove_line(IO.gets ""))
+  end
+
   def turn_end_display(board) do
     send_message(newline())
-    send_message(choice_made_message())
+    send_message(choice_made_prompt())
     send_message(newline())
     send_message(format_board(board))
     send_message(newline())
@@ -51,13 +58,13 @@ defmodule CLI do
 
   def announce_win(mark) do
     send_message(newline())
-    send_message(win_message(convert_mark(mark)))
+    send_message(win_prompt(convert_mark(mark)))
     send_message(newline())
   end
 
   def announce_tie do
     send_message(newline())
-    send_message(tie_message)
+    send_message(tie_prompt)
     send_message(newline())
   end
 end

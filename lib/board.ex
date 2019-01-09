@@ -24,7 +24,7 @@ defmodule Board do
   end
 
   def get_all_indices(board) do
-    row_indices(board) ++ col_indices(board)
+    row_indices(board) ++ col_indices(board) ++ diag_indices(board)
   end
 
   def row_indices(board) do
@@ -34,10 +34,21 @@ defmodule Board do
 
   def col_indices(board) do
     starting_points = 0..(dimension(board) - 1)
-    first_col = Enum.map(starting_points, fn point -> point * dimension(board) end)
-    second_col = Enum.map(starting_points, fn point -> point * dimension(board) + 1 end)
-    third_col = Enum.map(starting_points, fn point -> point * dimension(board) + 2 end)
-    [first_col, second_col, third_col]
+
+    first_col =
+      Enum.map(starting_points, fn point ->
+        Enum.map(starting_points, fn deeper_point ->
+          deeper_point * dimension(board) + point
+        end)
+      end)
+  end
+
+  def diag_indices(board) do
+    starting_points_one = Enum.to_list(0..(dimension(board) - 1))
+    first_diag = Enum.map(starting_points_one, fn point -> point * dimension(board) + point end)
+    starting_points_two = Enum.to_list(1..dimension(board))
+    second_diag = Enum.map(starting_points_two, fn point -> point * dimension(board) - point end)
+    [first_diag, second_diag]
   end
 
   def get_marks(indices, board) do

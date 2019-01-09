@@ -1,13 +1,13 @@
 defmodule HumanPlayer do
-  import Prompts, only: [ask_tile_prompt: 0]
   import Globals, only: [remove_line: 1, newline: 0]
+  import CLI, only: [ask_tile_choice: 0]
 
   def get_tile_choice do
-    input = IO.gets(ask_tile_prompt() <> newline())
-    convert_choice(input)
+    input = ask_tile_choice()
+    convert_to_board_position(input)
   end
 
-  def convert_choice(input) do
-    String.to_integer(remove_line(input)) - 1
+  def convert_to_board_position(input) do
+    input - 1
   end
 end

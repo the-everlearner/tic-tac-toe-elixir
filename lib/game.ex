@@ -13,6 +13,7 @@ defmodule Game do
     tile_choice = get_tile_choice()
     new_board = place_mark(prev_board, tile_choice, active_player[:mark])
     turn_end_display(new_board)
+
     if finished?(new_board, active_player[:mark]) do
       do_results(new_board, active_player)
     else

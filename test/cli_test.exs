@@ -1,6 +1,7 @@
 defmodule CLITest do
   use ExUnit.Case
   import ExUnit.CaptureIO
+  import CLI
   import Marks
 
   @empty_board List.duplicate(empty_mark(), 9)
@@ -19,15 +20,19 @@ defmodule CLITest do
                   |> List.replace_at(8, player_two_mark())
 
   test "send message to stdout" do
-    assert capture_io(fn -> CLI.send_message("dummy message") end) == "dummy message"
+    assert capture_io(fn -> send_message("dummy message") end) == "dummy message"
   end
 
   test "format empty board" do
-    assert CLI.format_board(@empty_board) == @formatted_empty_board
+    assert format_board(@empty_board) == @formatted_empty_board
   end
 
   test "format marked board" do
-    assert CLI.format_board(@marked_board_1) == @formatted_marked_board_1
-    assert CLI.format_board(@marked_board_2) == @formatted_marked_board_2
+    assert format_board(@marked_board_1) == @formatted_marked_board_1
+    assert format_board(@marked_board_2) == @formatted_marked_board_2
+  end
+
+  test "convert user input to integer" do
+    assert convert_input_to_integer("1\n") == 1
   end
 end

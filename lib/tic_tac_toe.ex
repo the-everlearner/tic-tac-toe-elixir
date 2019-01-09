@@ -26,11 +26,11 @@ defmodule TicTacToe do
 
   def make_players(mode) do
     case mode do
-      @hvh -> 
-    [[type: human(), mark: player_one_mark()], [type: human(), mark: player_two_mark()]]
-      @hvc -> 
-    [[type: human(), mark: player_one_mark()], [type: comp(), mark: player_two_mark()]]
+      @hvh ->
+        [[type: human(), mark: player_one_mark()], [type: human(), mark: player_two_mark()]]
+
+      @hvc ->
+        [[type: human(), mark: player_one_mark()], [type: comp(), mark: player_two_mark()]]
     end
   end
-
 end

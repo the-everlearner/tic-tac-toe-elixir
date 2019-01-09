@@ -34,6 +34,10 @@ defmodule CLI do
     ~s{#{List.to_string(with_newlines)}#{newline()}}
   end
 
+  def convert_input_to_integer(input) do
+    String.to_integer(remove_line(input))
+  end
+
   def announce_welcome(board) do
     send_message(welcome_prompt())
     send_message(newline())
@@ -45,7 +49,16 @@ defmodule CLI do
     send_message(newline())
     send_message(ask_mode_prompt())
     send_message(newline())
-    String.to_integer(remove_line(IO.gets ""))
+    input = IO.gets("")
+    convert_input_to_integer(input)
+  end
+
+  def ask_tile_choice do
+    send_message(newline())
+    send_message(ask_tile_prompt())
+    send_message(newline())
+    input = IO.gets("")
+    convert_input_to_integer(input)
   end
 
   def turn_end_display(board) do

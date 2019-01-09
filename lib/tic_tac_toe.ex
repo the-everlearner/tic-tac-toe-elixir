@@ -2,8 +2,9 @@ defmodule TicTacToe do
   import Board, only: [make_initial_board: 0]
   import Game, only: [run_game: 2]
   import Marks
-  import PlayerTypes
   import CLI, only: [ask_mode: 0]
+  import HumanPlayer, only: [get_tile_from_human: 1]
+  import CompPlayer, only: [get_tile_from_comp: 1]
 
   @hvh :hvh
   @hvc :hvc
@@ -27,10 +28,16 @@ defmodule TicTacToe do
   def make_players(mode) do
     case mode do
       @hvh ->
-        [[type: human(), mark: player_one_mark()], [type: human(), mark: player_two_mark()]]
+        [
+          [get_tile: &get_tile_from_human/1, mark: player_one_mark()],
+          [get_tile: &get_tile_from_human/1, mark: player_two_mark()]
+        ]
 
       @hvc ->
-        [[type: human(), mark: player_one_mark()], [type: comp(), mark: player_two_mark()]]
+        [
+          [get_tile: &get_tile_from_human/1, mark: player_one_mark()],
+          [get_tile: &get_tile_from_comp/1, mark: player_two_mark()]
+        ]
     end
   end
 end

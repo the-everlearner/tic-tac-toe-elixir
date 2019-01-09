@@ -1,8 +1,8 @@
 defmodule Game do
   import CLI, only: [announce_welcome: 1, turn_end_display: 1, announce_win: 1, announce_tie: 0]
   import Board, only: [place_mark: 3, finished?: 2, won?: 2]
-  import HumanPlayer, only: [get_tile_choice: 0]
   import Marks
+  import HumanPlayer, only: [get_tile_from_human: 1]
 
   def run_game(initial_board, players) do
     announce_welcome(initial_board)
@@ -10,7 +10,7 @@ defmodule Game do
   end
 
   def play_turns(prev_board, active_player, passive_player) do
-    tile_choice = get_tile_choice()
+    tile_choice = active_player[:get_tile].(prev_board)
     new_board = place_mark(prev_board, tile_choice, active_player[:mark])
     turn_end_display(new_board)
 

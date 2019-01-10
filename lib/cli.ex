@@ -59,9 +59,20 @@ defmodule CLI do
     write_with_newlines(format_board(board))
   end
 
+  def get_tile_choice do
+    tile_choice = ask_tile_choice()
+
+    if valid_number?(tile_choice) do
+      clean_number(tile_choice)
+    else
+      invalid_number_message()
+      get_tile_choice
+    end
+  end
+
   def ask_tile_choice do
     write_with_newlines(ask_tile_prompt())
-    clean_number(IO.gets(""))
+    IO.gets("")
   end
 
   def turn_end_display(board) do

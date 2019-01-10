@@ -30,10 +30,6 @@ defmodule CLI do
     ~s{#{List.to_string(with_newlines)}#{newline()}}
   end
 
-  def convert_input_to_integer(input) do
-    String.to_integer(remove_line(input))
-  end
-
   def announce_welcome do
     write_with_newlines(welcome_prompt())
   end
@@ -53,15 +49,13 @@ defmodule CLI do
   end
 
   def ask_mode do
-    write_with_newlines(win_prompt(ask_mode_prompt()))
+    write_with_newlines(ask_mode_prompt())
     input = IO.gets("")
-    convert_input_to_integer(input)
   end
 
   def ask_tile_choice do
     write_with_newlines(ask_tile_prompt())
     input = IO.gets("")
-    convert_input_to_integer(input)
   end
 
   def turn_end_display(board) do

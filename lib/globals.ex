@@ -5,4 +5,8 @@ defmodule Globals do
   def remove_line(input) do
     String.replace_suffix(input, "\n", "")
   end
+
+  def valid_number?(input) do
+    Regex.match?(~r{^\d+$}, input)
+  end
 end

@@ -27,8 +27,4 @@ defmodule CLITest do
     assert format_board(@marked_board_1) == @formatted_marked_board_1
     assert format_board(@marked_board_2) == @formatted_marked_board_2
   end
-
-  test "convert user input to integer" do
-    assert convert_input_to_integer("1\n") == 1
-  end
 end

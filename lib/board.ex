@@ -90,6 +90,7 @@ defmodule Board do
       else
         nil
       end end)
+    Enum.reject(positions, fn position -> is_nil(position) end)
   end
 
   def generate_marked_board(empty_board, positions, mark) do

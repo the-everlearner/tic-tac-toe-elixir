@@ -9,6 +9,7 @@ defmodule GlobalsTest do
   test "returns true if number valid" do
     assert valid_number?("0") == true
   end
+
   test "returns false if number not valid" do
     refute valid_number?("0a")
     refute valid_number?("?2")

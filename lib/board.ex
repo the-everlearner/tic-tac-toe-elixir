@@ -9,7 +9,7 @@ defmodule Board do
   end
 
   def in_range?(board, position) do
-    Enum.member?(0..length(board) - 1, position)
+    Enum.member?(0..(length(board) - 1), position)
   end
 
   def tile_occupied?(board, position) do
@@ -79,5 +79,18 @@ defmodule Board do
 
   def dimension(board) do
     trunc(:math.sqrt(length(board)))
+  end
+
+  def generate_marked_board(empty_board, positions, mark) do
+    board_indices = 0..length(empty_board)
+    marks_with_indices = Enum.zip(empty_board, board_indices)
+
+    Enum.map(marks_with_indices, fn mark_with_index ->
+      if Enum.member?(positions, elem(mark_with_index, 1)) do
+        mark
+      else
+        :empty_mark
+      end
+    end)
   end
 end

@@ -40,10 +40,11 @@ defmodule CLI do
 
   def get_number_choice(message) do
     number_choice = ask_for_input(message)
+
     if valid_number?(number_choice) do
       clean_number(number_choice)
     else
-    write_with_newlines(invalid_number_prompt())
+      write_with_newlines(invalid_number_prompt())
       get_number_choice(message)
     end
   end

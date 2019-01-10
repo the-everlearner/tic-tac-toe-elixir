@@ -23,7 +23,7 @@ defmodule BoardTest do
 
   test "return true if tile occupied" do
     board = generate_marked_board(@empty_board, [0], player_one_mark())
-    
+
     assert tile_occupied?(board, 0) == true
   end
 
@@ -85,18 +85,5 @@ defmodule BoardTest do
 
   test "get diag indices" do
     assert diag_indices(@empty_board) == [[0, 4, 8], [2, 4, 6]]
-  end
-
-  def generate_marked_board(empty_board, positions, mark) do
-    board_indices = 0..length(empty_board)
-    marks_with_indices = Enum.zip(empty_board, board_indices)
-
-    Enum.map(marks_with_indices, fn mark_with_index ->
-      if Enum.member?(positions, elem(mark_with_index, 1)) do
-        mark
-      else
-        :empty_mark
-      end
-    end)
   end
 end

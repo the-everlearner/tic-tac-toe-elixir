@@ -3,8 +3,8 @@ defmodule TicTacToe do
   import Game, only: [run_game: 2]
   import Marks
   import CLI, only: [announce_welcome: 0, get_mode_choice: 0, invalid_mode_choice: 0]
-  import HumanPlayer, only: [get_tile_from_human: 1]
-  import CompPlayer, only: [get_tile_from_comp: 1]
+  import HumanPlayer, only: [make_human_move: 2]
+  import CompPlayer, only: [make_comp_move: 2]
   import Modes
 
   def run do
@@ -19,9 +19,13 @@ defmodule TicTacToe do
 
   def find_mode do
     case get_mode_choice() do
-      1 -> @hvh
-      2 -> @hvc
-      _ -> 
+      1 ->
+        @hvh
+
+      2 ->
+        @hvc
+
+      _ ->
         invalid_mode_choice()
         find_mode()
     end
@@ -31,14 +35,14 @@ defmodule TicTacToe do
     case mode do
       @hvh ->
         [
-          [get_tile: &get_tile_from_human/1, mark: player_one_mark()],
-          [get_tile: &get_tile_from_human/1, mark: player_two_mark()]
+          [make_move: &make_human_move/2, mark: player_one_mark()],
+          [make_move: &make_human_move/2, mark: player_two_mark()]
         ]
 
       @hvc ->
         [
-          [get_tile: &get_tile_from_human/1, mark: player_one_mark()],
-          [get_tile: &get_tile_from_comp/1, mark: player_two_mark()]
+          [make_move: &make_human_move/2, mark: player_one_mark()],
+          [make_move: &make_comp_move/2, mark: player_two_mark()]
         ]
     end
   end

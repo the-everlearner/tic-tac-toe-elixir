@@ -38,6 +38,18 @@ defmodule CLI do
     String.to_integer(remove_line(input))
   end
 
+  def announce_welcome do
+  end
+
+  def get_mode_choice do
+  end
+
+  def invalid_mode_choice do
+  end
+
+  def invalid_mode_message do
+  end
+
   def announce_welcome(board) do
     send_message(welcome_prompt())
     send_message(newline())
@@ -79,5 +91,9 @@ defmodule CLI do
     send_message(newline())
     send_message(tie_prompt)
     send_message(newline())
+  end
+
+  def add_newlines(phrase) do
+    newline() <> phrase <> newline()
   end
 end

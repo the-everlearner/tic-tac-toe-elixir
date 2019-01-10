@@ -11,10 +11,6 @@ defmodule CLI do
     end
   end
 
-  def send_message(message) do
-    IO.write(message)
-  end
-
   def format_board(tiles) do
     tile_indices = 1..Enum.count(tiles)
     converted_tiles = Enum.map(tiles, fn tile -> convert_mark(tile) end)
@@ -51,49 +47,36 @@ defmodule CLI do
   end
 
   def announce_welcome(board) do
-    send_message(welcome_prompt())
-    send_message(newline())
-    send_message(format_board(board))
-    send_message(newline())
+    write_with_newlines(welcome_prompt())
+    write_with_newlines(format_board(board))
   end
 
   def ask_mode do
-    send_message(newline())
-    send_message(ask_mode_prompt())
-    send_message(newline())
+    write_with_newlines(win_prompt(ask_mode_prompt()))
     input = IO.gets("")
     convert_input_to_integer(input)
   end
 
   def ask_tile_choice do
-    send_message(newline())
-    send_message(ask_tile_prompt())
-    send_message(newline())
+    write_with_newlines(ask_tile_prompt())
     input = IO.gets("")
     convert_input_to_integer(input)
   end
 
   def turn_end_display(board) do
-    send_message(newline())
-    send_message(choice_made_prompt())
-    send_message(newline())
-    send_message(format_board(board))
-    send_message(newline())
+    write_with_newlines(choice_made_prompt())
+    write_with_newlines(format_board(board))
   end
 
   def announce_win(mark) do
-    send_message(newline())
-    send_message(win_prompt(convert_mark(mark)))
-    send_message(newline())
+    write_with_newlines(win_prompt(convert_mark(mark)))
   end
 
   def announce_tie do
-    send_message(newline())
-    send_message(tie_prompt)
-    send_message(newline())
+    write_with_newlines(tie_prompt)
   end
 
-  def add_newlines(phrase) do
-    newline() <> phrase <> newline()
+  def write_with_newlines(phrase) do
+    IO.write(newline() <> phrase <> newline())
   end
 end

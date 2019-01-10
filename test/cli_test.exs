@@ -1,6 +1,5 @@
 defmodule CLITest do
   use ExUnit.Case
-  import ExUnit.CaptureIO
   import CLI
   import Marks
   import Globals, only: [newline: 0]
@@ -20,10 +19,6 @@ defmodule CLITest do
                   |> List.replace_at(5, player_one_mark())
                   |> List.replace_at(8, player_two_mark())
 
-  test "send message to stdout" do
-    assert capture_io(fn -> send_message("dummy message") end) == "dummy message"
-  end
-
   test "format empty board" do
     assert format_board(@empty_board) == @formatted_empty_board
   end
@@ -35,9 +30,5 @@ defmodule CLITest do
 
   test "convert user input to integer" do
     assert convert_input_to_integer("1\n") == 1
-  end
-
-  test "adds new lines above and below" do
-    assert add_newlines("Howdy") == ~s{#{newline()}Howdy#{newline()}}
   end
 end

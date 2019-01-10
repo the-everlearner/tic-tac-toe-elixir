@@ -2,10 +2,13 @@ defmodule TicTacToe do
   import Board, only: [make_initial_board: 0]
   import Game, only: [run_game: 2]
   import Marks
-  import CLI, only: [announce_welcome: 0, get_mode_choice: 0, invalid_mode_message: 0]
+  import CLI, only: [announce_welcome: 0, ask_mode: 0, invalid_mode_message: 0]
   import HumanPlayer, only: [get_tile_from_human: 1]
   import CompPlayer, only: [get_tile_from_comp: 1]
   import Modes
+
+  @hvh :hvh
+  @hvc :hvc
 
   def run do
     announce_welcome()
@@ -18,9 +21,9 @@ defmodule TicTacToe do
   end
 
   def find_mode do
-    case get_mode_choice() do
-      "1" -> @hvh
-      "2" -> @hvc
+    case ask_mode() do
+      1 -> @hvh
+      2 -> @hvc
     end
   end
 

@@ -61,8 +61,12 @@ defmodule CLI do
     tile_choice = get_number_choice(ask_tile_prompt())
   end
 
-  def tile_not_in_range do
+  def tile_not_in_range_message do
     write_with_newlines(tile_not_in_range_prompt())
+  end
+
+  def tile_occupied_message do
+    write_with_newlines(tile_occupied_prompt())
   end
 
   def turn_end_display(board) do
@@ -75,7 +79,7 @@ defmodule CLI do
   end
 
   def announce_tie do
-    write_with_newlines(tie_prompt)
+    write_with_newlines(tie_prompt())
   end
 
   def write_with_newlines(phrase) do

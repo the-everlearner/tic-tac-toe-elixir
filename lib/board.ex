@@ -12,6 +12,10 @@ defmodule Board do
     Enum.member?(0..length(board) - 1, position)
   end
 
+  def tile_occupied?(board, position) do
+    Enum.at(board, position) != empty_mark()
+  end
+
   def finished?(board, player_mark) do
     won?(board, player_mark) || full?(board)
   end

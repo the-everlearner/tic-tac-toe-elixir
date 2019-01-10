@@ -10,11 +10,21 @@ defmodule BoardTest do
              generate_marked_board(@empty_board, [0], player_one_mark())
   end
 
-  test "returns whether position is in range" do
+  test "whether position is in range" do
     assert in_range?(@empty_board, 0) == true
     assert in_range?(@empty_board, 8) == true
     refute in_range?(@empty_board, 9)
     refute in_range?(@empty_board, -1)
+  end
+
+  test "return false if tile not occupied" do
+    refute tile_occupied?(@empty_board, 0)
+  end
+
+  test "return true if tile occupied" do
+    board = generate_marked_board(@empty_board, [0], player_one_mark())
+    
+    assert tile_occupied?(board, 0) == true
   end
 
   test "returns false if game not finished" do

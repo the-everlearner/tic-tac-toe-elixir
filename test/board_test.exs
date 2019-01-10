@@ -86,4 +86,8 @@ defmodule BoardTest do
   test "get diag indices" do
     assert diag_indices(@empty_board) == [[0, 4, 8], [2, 4, 6]]
   end
+
+  test "get empty tiles" do
+    assert get_empty_tile_positions(@empty_board) == [0, 1, 2, 3, 4, 5, 6, 7, 8]
+  end
 end

@@ -8,9 +8,6 @@ defmodule TicTacToe do
   import Modes
   import Prompts, only: [ask_mode_prompt: 0]
 
-  @hvh :hvh
-  @hvc :hvc
-
   def run do
     announce_welcome()
     run_game(make_initial_board(), get_players())

@@ -10,6 +10,12 @@ defmodule BoardTest do
              generate_marked_board(@empty_board, [0], player_one_mark())
   end
 
+  test "returns whether position is in range" do
+    assert in_range?(@empty_board, 0) == true
+    assert in_range?(@empty_board, 8) == true
+    refute in_range?(@empty_board, 9)
+  end
+
   test "returns false if game not finished" do
     refute finished?(@empty_board, player_one_mark())
   end

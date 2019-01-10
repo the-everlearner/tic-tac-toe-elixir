@@ -8,6 +8,14 @@ defmodule Board do
     List.replace_at(board, position, mark)
   end
 
+  def in_range?(board, position) do
+    if Enum.at(board, position) do
+      true
+    else
+      false
+    end
+  end
+
   def finished?(board, player_mark) do
     won?(board, player_mark) || full?(board)
   end

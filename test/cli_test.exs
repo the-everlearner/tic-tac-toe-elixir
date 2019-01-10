@@ -2,7 +2,6 @@ defmodule CLITest do
   use ExUnit.Case
   import CLI
   import Marks
-  import Globals, only: [newline: 0]
 
   @empty_board List.duplicate(empty_mark(), 9)
   @formatted_empty_board ~s{[1] [2] [3] \r\n[4] [5] [6] \r\n[7] [8] [9] \r\n}

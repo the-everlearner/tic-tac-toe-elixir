@@ -1,5 +1,5 @@
 defmodule CompPlayer do
-  import Board, only: [place_mark: 3, won?: 2]
+  import Board, only: [place_mark: 3, won?: 2, get_empty_tile_positions: 1]
   import Marks
 
   def make_comp_move(board, player) do
@@ -10,7 +10,10 @@ defmodule CompPlayer do
   def get_best_tile(board, player) do
   end
 
-  def maximise(empty_tile_positions, player, opponent) do
+  def maximise(board, player, opponent) do
+    empty_tile_positions = get_empty_tile_positions(board)
+    tiles_with_scores = get_scores(board, empty_tile_positions, player, opponent)
+
   end
 
   def get_scores(board, empty_tile_positions, player, opponent) do
@@ -34,5 +37,14 @@ defmodule CompPlayer do
     else
       player_one_mark()
     end
+  end
+
+  def find_max(tiles_with_scores) do
+    Enum.reduce(tiles_with_scores, fn current_max_tile, next_tile ->
+      if elem(next_tile, 1) > elem(current_max_tile, 1) do
+        next_tile
+      else
+        current_max_tile
+      end end)
   end
 end

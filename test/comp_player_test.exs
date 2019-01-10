@@ -38,4 +38,10 @@ defmodule CompPlayerTest do
 
     assert get_scores(board, [7, 8], player_one_mark(), player_two_mark()) == [{7, 10}, {8, 10}]
   end
+
+  test "find max" do
+    tiles_with_scores = [{4, 7}, {7, 9}, {8, -10}]
+
+    assert find_max(tiles_with_scores) == {7, 9}
+  end
 end

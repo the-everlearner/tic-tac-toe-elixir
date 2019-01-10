@@ -34,14 +34,13 @@ defmodule CLI do
     write_with_newlines(welcome_prompt())
   end
 
-  def get_mode_choice do
-    mode_choice = ask_mode()
-
-    if valid_number?(mode_choice) do
-      clean_number(mode_choice)
+  def get_number_choice(message) do
+    number_choice = ask_for_input(message)
+    if valid_number?(number_choice) do
+      clean_number(number_choice)
     else
       invalid_number_message()
-      get_mode_choice()
+      get_number_choice(message)
     end
   end
 
@@ -50,8 +49,11 @@ defmodule CLI do
   end
 
   def ask_mode do
-    write_with_newlines(ask_mode_prompt())
-    input = IO.gets("")
+    ask_for_input(ask_mode_prompt())
+  end
+
+  def invalid_mode_choice do
+    write_with_newlines(invalid_mode_prompt)
   end
 
   def introduce_game(board) do
@@ -59,20 +61,8 @@ defmodule CLI do
     write_with_newlines(format_board(board))
   end
 
-  def get_tile_choice do
-    tile_choice = ask_tile_choice()
-
-    if valid_number?(tile_choice) do
-      clean_number(tile_choice)
-    else
-      invalid_number_message()
-      get_tile_choice
-    end
-  end
-
   def ask_tile_choice do
-    write_with_newlines(ask_tile_prompt())
-    IO.gets("")
+    ask_for_input(ask_tile_prompt())
   end
 
   def turn_end_display(board) do
@@ -94,5 +84,10 @@ defmodule CLI do
 
   def clean_number(number) do
     String.to_integer(remove_line(number))
+  end
+
+  def ask_for_input(message) do
+    write_with_newlines(message)
+    IO.gets("")
   end
 end

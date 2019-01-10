@@ -27,4 +27,8 @@ defmodule CLITest do
     assert format_board(@marked_board_1) == @formatted_marked_board_1
     assert format_board(@marked_board_2) == @formatted_marked_board_2
   end
+
+  test "cleans number" do
+    assert clean_number("0\n") == 0
+  end
 end

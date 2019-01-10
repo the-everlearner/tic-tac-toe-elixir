@@ -1,7 +1,7 @@
 defmodule CLI do
   import Prompts
   import Marks
-  import Globals, only: [newline: 0, remove_line: 1]
+  import Globals, only: [newline: 0, remove_line: 1, valid_number?: 1]
 
   defp convert_mark(mark) do
     case mark do
@@ -35,17 +35,18 @@ defmodule CLI do
   end
 
   def get_mode_choice do
+    mode_choice = ask_mode()
+
+    if valid_number?(mode_choice) do
+      clean_number(mode_choice)
+    else
+      invalid_number_message()
+      get_mode_choice()
+    end
   end
 
-  def invalid_mode_choice do
-  end
-
-  def invalid_mode_message do
-  end
-
-  def introduce_game(board) do
-    write_with_newlines(introduce_game_prompt)
-    write_with_newlines(format_board(board))
+  def invalid_number_message do
+    write_with_newlines(invalid_number_prompt())
   end
 
   def ask_mode do
@@ -53,9 +54,14 @@ defmodule CLI do
     input = IO.gets("")
   end
 
+  def introduce_game(board) do
+    write_with_newlines(introduce_game_prompt)
+    write_with_newlines(format_board(board))
+  end
+
   def ask_tile_choice do
     write_with_newlines(ask_tile_prompt())
-    input = IO.gets("")
+    clean_number(IO.gets(""))
   end
 
   def turn_end_display(board) do
@@ -73,5 +79,9 @@ defmodule CLI do
 
   def write_with_newlines(phrase) do
     IO.write(newline() <> phrase <> newline())
+  end
+
+  def clean_number(number) do
+    String.to_integer(remove_line(number))
   end
 end

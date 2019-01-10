@@ -4,6 +4,8 @@ defmodule Prompts do
   def ask_mode_prompt,
     do: ~s{Please enter '1' for human vs human mode or '2' for human vs comp mode}
 
+  def introduce_game_prompt, do: ~s{And let's go! Here's the board}
+
   def ask_tile_prompt, do: ~s{Please enter a tile number}
 
   def choice_made_prompt, do: ~s{Here's the choice!}

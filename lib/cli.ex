@@ -35,6 +35,7 @@ defmodule CLI do
   end
 
   def announce_welcome do
+    write_with_newlines(welcome_prompt())
   end
 
   def get_mode_choice do
@@ -46,8 +47,8 @@ defmodule CLI do
   def invalid_mode_message do
   end
 
-  def announce_welcome(board) do
-    write_with_newlines(welcome_prompt())
+  def introduce_game(board) do
+    write_with_newlines(introduce_game_prompt)
     write_with_newlines(format_board(board))
   end
 

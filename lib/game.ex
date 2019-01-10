@@ -1,11 +1,11 @@
 defmodule Game do
-  import CLI, only: [announce_welcome: 1, turn_end_display: 1, announce_win: 1, announce_tie: 0]
+  import CLI, only: [introduce_game: 1, turn_end_display: 1, announce_win: 1, announce_tie: 0]
   import Board, only: [place_mark: 3, finished?: 2, won?: 2]
   import Marks
   import HumanPlayer, only: [get_tile_from_human: 1]
 
   def run_game(initial_board, players) do
-    announce_welcome(initial_board)
+    introduce_game(initial_board)
     play_turns(initial_board, List.first(players), List.last(players))
   end
 

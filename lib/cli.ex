@@ -34,22 +34,18 @@ defmodule CLI do
     write_with_newlines(welcome_prompt())
   end
 
+  def get_mode_choice do
+    get_number_choice(ask_mode_prompt)
+  end
+
   def get_number_choice(message) do
     number_choice = ask_for_input(message)
     if valid_number?(number_choice) do
       clean_number(number_choice)
     else
-      invalid_number_message()
+    write_with_newlines(invalid_number_prompt())
       get_number_choice(message)
     end
-  end
-
-  def invalid_number_message do
-    write_with_newlines(invalid_number_prompt())
-  end
-
-  def ask_mode do
-    ask_for_input(ask_mode_prompt())
   end
 
   def invalid_mode_choice do
@@ -61,8 +57,12 @@ defmodule CLI do
     write_with_newlines(format_board(board))
   end
 
-  def ask_tile_choice do
-    ask_for_input(ask_tile_prompt())
+  def get_tile_choice do
+    tile_choice = get_number_choice(ask_tile_prompt())
+  end
+
+  def tile_not_in_range do
+    write_with_newlines(tile_not_in_range_prompt())
   end
 
   def turn_end_display(board) do

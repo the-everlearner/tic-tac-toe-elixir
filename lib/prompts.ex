@@ -14,6 +14,8 @@ defmodule Prompts do
 
   def ask_tile_prompt, do: ~s{Please enter a tile number}
 
+  def tile_not_in_range_prompt, do: ~s{That's not in range!}
+
   def choice_made_prompt, do: ~s{Here's the choice!}
 
   def win_prompt(mark), do: ~s{Player #{mark} won!}

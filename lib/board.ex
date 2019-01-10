@@ -9,11 +9,7 @@ defmodule Board do
   end
 
   def in_range?(board, position) do
-    if Enum.at(board, position) do
-      true
-    else
-      false
-    end
+    Enum.member?(0..length(board) - 1, position)
   end
 
   def finished?(board, player_mark) do

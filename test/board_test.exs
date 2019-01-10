@@ -14,6 +14,7 @@ defmodule BoardTest do
     assert in_range?(@empty_board, 0) == true
     assert in_range?(@empty_board, 8) == true
     refute in_range?(@empty_board, 9)
+    refute in_range?(@empty_board, -1)
   end
 
   test "returns false if game not finished" do

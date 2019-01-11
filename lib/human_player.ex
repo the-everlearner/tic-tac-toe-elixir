@@ -16,7 +16,7 @@ defmodule HumanPlayer do
         make_human_move(board, mark)
 
       true ->
-    place_mark(board, tile_choice, mark)
+        place_mark(board, tile_choice, mark)
     end
   end
 

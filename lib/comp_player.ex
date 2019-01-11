@@ -1,34 +1,58 @@
 defmodule CompPlayer do
-  import Board, only: [place_mark: 3, won?: 2, get_empty_tile_positions: 1]
+  import Board, only: [place_mark: 3, won?: 2, get_empty_tile_positions: 1, finished?: 2]
   import Marks
 
   def make_comp_move(board, player) do
-    move = get_best_tile(board, player)
+    move = elem(maximise(board, player, get_opponent(player)), 0)
     place_mark(board, move, player)
   end
 
-  def get_best_tile(board, player) do
-  end
-
-  def maximise(board, player, opponent) do
+  def maximise(board, minimaxer, opponent) do
     empty_tile_positions = get_empty_tile_positions(board)
-    scores = Enum.map(empty_tile_positions, fn position ->
-    place_mark(board, position, player) |> score_board(player, opponent)
-    end)
+
+    scores =
+      Enum.map(empty_tile_positions, fn position ->
+        next_board = place_mark(board, position, minimaxer)
+
+        if finished?(next_board, minimaxer) do
+            score_board(next_board, minimaxer, opponent)
+        else
+          elem(minimise(next_board, minimaxer, opponent), 1)
+        end
+      end)
+
     tiles_with_scores = Enum.zip(empty_tile_positions, scores)
     find_max(tiles_with_scores)
   end
 
-  def score_board(board, player, opponent) do
+  def minimise(board, minimaxer, opponent) do
+    empty_tile_positions = get_empty_tile_positions(board)
+
+    scores =
+      Enum.map(empty_tile_positions, fn position ->
+        next_board = place_mark(board, position, opponent)
+
+        if finished?(next_board, opponent) do
+            score_board(next_board, minimaxer, opponent)
+        else
+          elem(maximise(next_board, minimaxer, opponent), 1)
+        end
+      end)
+
+    tiles_with_scores = Enum.zip(empty_tile_positions, scores)
+    find_min(tiles_with_scores)
+  end
+
+  def score_board(board, minimaxer, opponent) do
     cond do
-      won?(board, player) -> 10
-      won?(board, opponent) -> 10
+      won?(board, minimaxer) -> 10
+      won?(board, opponent) -> -10
       true -> 0
     end
   end
 
-  def get_opponent(mark) do
-    if mark == player_one_mark() do
+  def get_opponent(player) do
+    if player == player_one_mark() do
       player_two_mark()
     else
       player_one_mark()
@@ -41,6 +65,17 @@ defmodule CompPlayer do
         next_tile
       else
         current_max_tile
-      end end)
+      end
+    end)
+  end
+
+  def find_min(tiles_with_scores) do
+    Enum.reduce(tiles_with_scores, fn current_min_tile, next_tile ->
+      if elem(next_tile, 1) < elem(current_min_tile, 1) do
+        next_tile
+      else
+        current_min_tile
+      end
+    end)
   end
 end

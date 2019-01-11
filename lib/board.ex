@@ -84,12 +84,16 @@ defmodule Board do
   def get_empty_tile_positions(board) do
     indices = 0..length(board)
     marks_with_indices = Enum.zip(board, indices)
-    positions = Enum.map(marks_with_indices, fn tile_with_index ->
-      if elem(tile_with_index, 0) == empty_mark() do
-        elem(tile_with_index, 1)
-      else
-        nil
-      end end)
+
+    positions =
+      Enum.map(marks_with_indices, fn tile_with_index ->
+        if elem(tile_with_index, 0) == empty_mark() do
+          elem(tile_with_index, 1)
+        else
+          nil
+        end
+      end)
+
     Enum.reject(positions, fn position -> is_nil(position) end)
   end
 

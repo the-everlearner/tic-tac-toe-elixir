@@ -12,6 +12,7 @@ defmodule Game do
     mark = active_player[:mark]
     new_board = active_player[:make_move].(prev_board, mark)
     turn_end_display(new_board)
+
     if finished?(new_board, mark) do
       do_results(new_board, mark)
     else

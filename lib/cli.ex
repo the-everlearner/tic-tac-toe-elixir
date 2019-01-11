@@ -1,6 +1,5 @@
 defmodule CLI do
   import Prompts
-  import Marks
   import Globals, only: [newline: 0, remove_line: 1, valid_number?: 1]
 
   defp convert_mark(mark) do
@@ -31,46 +30,60 @@ defmodule CLI do
   end
 
   def announce_welcome do
+    clear_screen()
     write_with_newlines(welcome_prompt())
   end
 
   def get_mode_choice do
-    get_number_choice(ask_mode_prompt)
-  end
+    mode_choice = ask_for_input(ask_mode_prompt)
 
-  def get_number_choice(message) do
-    number_choice = ask_for_input(message)
-
-    if valid_number?(number_choice) do
-      clean_number(number_choice)
+    if valid_number?(mode_choice) do
+      clean_number(mode_choice)
     else
+      clear_screen()
       write_with_newlines(invalid_number_prompt())
-      get_number_choice(message)
+      get_mode_choice()
     end
   end
 
   def invalid_mode_choice do
-    write_with_newlines(invalid_mode_prompt)
+    clear_screen()
+    write_with_newlines(invalid_mode_prompt())
   end
 
   def introduce_game(board) do
-    write_with_newlines(introduce_game_prompt)
+    clear_screen()
+    write_with_newlines(introduce_game_prompt())
     write_with_newlines(format_board(board))
   end
 
-  def get_tile_choice do
-    tile_choice = get_number_choice(ask_tile_prompt())
+  def get_tile_choice(board) do
+    tile_choice = ask_for_input(ask_tile_prompt())
+
+    if valid_number?(tile_choice) do
+      clean_number(tile_choice)
+    else
+      clear_screen()
+      write_with_newlines(invalid_number_prompt())
+      write_with_newlines(format_board(board))
+      get_tile_choice(board)
+    end
   end
 
-  def tile_not_in_range_message do
+  def tile_not_in_range_message(board) do
+    clear_screen()
     write_with_newlines(tile_not_in_range_prompt())
+    write_with_newlines(format_board(board))
   end
 
-  def tile_occupied_message do
+  def tile_occupied_message(board) do
+    clear_screen()
     write_with_newlines(tile_occupied_prompt())
+    write_with_newlines(format_board(board))
   end
 
   def turn_end_display(board) do
+    clear_screen()
     write_with_newlines(choice_made_prompt())
     write_with_newlines(format_board(board))
   end
@@ -94,5 +107,9 @@ defmodule CLI do
   def ask_for_input(message) do
     write_with_newlines(message)
     IO.gets("")
+  end
+
+  def clear_screen do
+    IO.write(IO.ANSI.clear())
   end
 end

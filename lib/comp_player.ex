@@ -15,7 +15,7 @@ defmodule CompPlayer do
         next_board = place_mark(board, position, minimaxer)
 
         if finished?(next_board, minimaxer) do
-            score_board(next_board, minimaxer, opponent)
+          score_board(next_board, minimaxer, opponent)
         else
           elem(minimise(next_board, minimaxer, opponent), 1)
         end
@@ -33,7 +33,7 @@ defmodule CompPlayer do
         next_board = place_mark(board, position, opponent)
 
         if finished?(next_board, opponent) do
-            score_board(next_board, minimaxer, opponent)
+          score_board(next_board, minimaxer, opponent)
         else
           elem(maximise(next_board, minimaxer, opponent), 1)
         end

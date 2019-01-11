@@ -10,7 +10,9 @@ defmodule Prompts do
   def invalid_mode_prompt,
     do: ~s{That's not a valid mode choice}
 
-  def introduce_game_prompt, do: ~s{And let's go! Here's the board}
+  def introduce_game_prompt, do: ~s{Ready... set... go!}
+
+  def here_board_prompt, do: ~s{Here's the board}
 
   def ask_tile_prompt, do: ~s{Please enter a tile number}
 

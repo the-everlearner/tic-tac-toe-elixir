@@ -8,6 +8,8 @@ defmodule TicTacToe do
 
   @hvh :hvh
   @hvc :hvc
+  @cvh :cvh
+  @cvc :cvc
 
   def run do
     announce_welcome()
@@ -27,6 +29,12 @@ defmodule TicTacToe do
       2 ->
         @hvc
 
+      3 ->
+        @cvh
+
+      4 ->
+        @cvc
+
       _ ->
         invalid_mode_choice()
         find_mode()
@@ -44,6 +52,18 @@ defmodule TicTacToe do
       @hvc ->
         [
           [make_move: &make_human_move/2, mark: player_one_mark()],
+          [make_move: &make_comp_move/2, mark: player_two_mark()]
+        ]
+
+      @cvh ->
+        [
+          [make_move: &make_comp_move/2, mark: player_one_mark()],
+          [make_move: &make_human_move/2, mark: player_two_mark()]
+        ]
+
+      @cvc ->
+        [
+          [make_move: &make_comp_move/2, mark: player_one_mark()],
           [make_move: &make_comp_move/2, mark: player_two_mark()]
         ]
     end

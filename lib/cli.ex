@@ -35,7 +35,7 @@ defmodule CLI do
   end
 
   def get_mode_choice do
-    mode_choice = ask_for_input(ask_mode_prompt)
+    mode_choice = ask_for_input(ask_mode_prompt())
 
     if valid_number?(mode_choice) do
       clean_number(mode_choice)
@@ -86,6 +86,7 @@ defmodule CLI do
     clear_screen()
     write_with_newlines(choice_made_prompt())
     write_with_newlines(format_board(board))
+    Process.sleep(1000)
   end
 
   def announce_win(mark) do

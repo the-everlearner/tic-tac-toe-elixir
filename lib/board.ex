@@ -1,8 +1,9 @@
 defmodule Board do
   import Marks
 
-  @initial_board List.duplicate(empty_mark(), 9)
-  def make_initial_board, do: @initial_board
+  def make_initial_board do
+  List.duplicate(empty_mark(), 9)
+  end
 
   def place_mark(board, position, mark) do
     List.replace_at(board, position, mark)
@@ -21,7 +22,7 @@ defmodule Board do
   end
 
   def full?(board) do
-    !Enum.member?(board, :empty_mark)
+    !Enum.member?(board, empty_mark())
   end
 
   def won?(board, player_mark) do
@@ -47,7 +48,6 @@ defmodule Board do
   def col_indices(board) do
     starting_points = 0..(dimension(board) - 1)
 
-    first_col =
       Enum.map(starting_points, fn point ->
         Enum.map(starting_points, fn deeper_point ->
           deeper_point * dimension(board) + point
@@ -108,5 +108,9 @@ defmodule Board do
         :empty_mark
       end
     end)
+  end
+
+  def get_max_depth(board) do
+    length(board) + 1
   end
 end

@@ -1,13 +1,13 @@
 defmodule CompPlayerTest do
   use ExUnit.Case
   import CompPlayer
-  import Board
+  import Board, only: [make_initial_board: 0, generate_marked_board: 3]
   import Marks
 
-  @empty_board List.duplicate(empty_mark(), 9)
+  @empty_board make_initial_board()
 
   test "make comp move - 1" do
-    """
+    _ = """
     O X O
     O O X
     X 8 9
@@ -17,7 +17,7 @@ defmodule CompPlayerTest do
   end
 
   test "make comp move - 2" do
-    """
+    _ = """
     O X O
     4 5 X
     X O O
@@ -27,7 +27,7 @@ defmodule CompPlayerTest do
   end
 
   test "make comp move - 3 - to lose in as many turns as possible, testing depth" do
-    """
+    _ = """
     1 X 3
     4 5 X
     O O X

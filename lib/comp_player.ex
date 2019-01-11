@@ -1,8 +1,6 @@
 defmodule CompPlayer do
-  import Board, only: [place_mark: 3, won?: 2, get_empty_tile_positions: 1, finished?: 2]
+  import Board, only: [place_mark: 3, won?: 2, get_empty_tile_positions: 1, finished?: 2, get_max_depth: 1]
   import Marks
-
-  @max_depth 10
 
   def make_comp_move(board, player) do
     move = elem(maximise(board, player, get_opponent(player), 0), 0)
@@ -47,8 +45,8 @@ defmodule CompPlayer do
 
   def score_board(board, minimaxer, opponent, depth) do
     cond do
-      won?(board, minimaxer) -> @max_depth - depth
-      won?(board, opponent) -> depth - @max_depth
+      won?(board, minimaxer) -> get_max_depth(board) - depth
+      won?(board, opponent) -> depth - get_max_depth(board)
       true -> 0
     end
   end

@@ -91,4 +91,8 @@ defmodule BoardTest do
     board = generate_marked_board(@empty_board, [0, 1, 3], player_one_mark())
     assert get_empty_tile_positions(board) == [2, 4, 5, 6, 7, 8]
   end
+
+  test "get max depth" do
+    assert get_max_depth(@empty_board) == 10
+  end
 end

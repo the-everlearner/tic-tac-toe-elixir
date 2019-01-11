@@ -2,12 +2,14 @@ defmodule CompPlayer do
   import Board, only: [place_mark: 3, won?: 2, get_empty_tile_positions: 1, finished?: 2]
   import Marks
 
+  @max_depth 10
+
   def make_comp_move(board, player) do
-    move = elem(maximise(board, player, get_opponent(player)), 0)
+    move = elem(maximise(board, player, get_opponent(player), 0), 0)
     place_mark(board, move, player)
   end
 
-  def maximise(board, minimaxer, opponent) do
+  def maximise(board, minimaxer, opponent, depth) do
     empty_tile_positions = get_empty_tile_positions(board)
 
     scores =
@@ -15,9 +17,9 @@ defmodule CompPlayer do
         next_board = place_mark(board, position, minimaxer)
 
         if finished?(next_board, minimaxer) do
-          score_board(next_board, minimaxer, opponent)
+          score_board(next_board, minimaxer, opponent, depth)
         else
-          elem(minimise(next_board, minimaxer, opponent), 1)
+          elem(minimise(next_board, minimaxer, opponent, depth + 1), 1)
         end
       end)
 
@@ -25,7 +27,7 @@ defmodule CompPlayer do
     find_max(tiles_with_scores)
   end
 
-  def minimise(board, minimaxer, opponent) do
+  def minimise(board, minimaxer, opponent, depth) do
     empty_tile_positions = get_empty_tile_positions(board)
 
     scores =
@@ -33,9 +35,9 @@ defmodule CompPlayer do
         next_board = place_mark(board, position, opponent)
 
         if finished?(next_board, opponent) do
-          score_board(next_board, minimaxer, opponent)
+          score_board(next_board, minimaxer, opponent, depth)
         else
-          elem(maximise(next_board, minimaxer, opponent), 1)
+          elem(maximise(next_board, minimaxer, opponent, depth + 1), 1)
         end
       end)
 
@@ -43,10 +45,10 @@ defmodule CompPlayer do
     find_min(tiles_with_scores)
   end
 
-  def score_board(board, minimaxer, opponent) do
+  def score_board(board, minimaxer, opponent, depth) do
     cond do
-      won?(board, minimaxer) -> 10
-      won?(board, opponent) -> -10
+      won?(board, minimaxer) -> @max_depth - depth
+      won?(board, opponent) -> depth - @max_depth
       true -> 0
     end
   end

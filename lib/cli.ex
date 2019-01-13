@@ -1,25 +1,13 @@
 defmodule CLI do
   import Prompts
+  import Board, only: [dimension: 1]
 
   @newline "\r\n"
 
-  def format_board(tiles) do
-    tile_indices = 1..Enum.count(tiles)
-    converted_tiles = Enum.map(tiles, fn tile -> convert_mark(tile) end)
-    tiles_to_indices = Enum.zip(converted_tiles, tile_indices)
-
-    formatted_tiles =
-      Enum.map(tiles_to_indices, fn tile_and_index ->
-        if elem(tile_and_index, 0) == :empty_mark do
-          elem(tile_and_index, 1)
-        else
-          elem(tile_and_index, 0)
-        end
-      end)
-
-    square_bracks = Enum.map(formatted_tiles, fn tile -> ~s{[#{tile}] } end)
-    with_newlines = square_bracks |> List.insert_at(3, @newline) |> List.insert_at(7, @newline)
-    ~s{#{List.to_string(with_newlines)}#{@newline}}
+  def format_board(board) do
+    Enum.map(Enum.with_index(board), &get_representation/1)
+    |> insert_newlines
+    |> List.to_string()
   end
 
   def announce_welcome do
@@ -140,5 +128,29 @@ defmodule CLI do
 
   def valid_number?(input) do
     Regex.match?(~r{^\d+$}, input)
+  end
+
+  defp get_representation(tile_with_number) do
+    converted_mark = convert_mark(elem(tile_with_number, 0))
+
+    if converted_mark != :empty_mark do
+    ~s{[#{converted_mark}]  }
+    else
+    format_number_tile(elem(tile_with_number, 1) + 1)
+    end
+  end
+
+  defp format_number_tile(number) do
+      if number > 9 do
+    ~s{[#{number}] }
+      else
+    ~s{[#{number}]  }
+      end
+  end
+
+  defp insert_newlines(converted_tiles) do
+    Enum.chunk_every(converted_tiles, dimension(converted_tiles))
+    |> Enum.intersperse(@newline)
+    |> List.flatten()
   end
 end

@@ -1,10 +1,10 @@
 defmodule CompPlayerTest do
   use ExUnit.Case
   import CompPlayer
-  import Board, only: [make_initial_board: 0, generate_marked_board: 3]
+  import Board, only: [make_initial_board: 1, generate_marked_board: 3]
   import Marks
 
-  @empty_board make_initial_board()
+  @empty_board make_initial_board(3)
 
   test "make comp move - 1" do
     _ = """

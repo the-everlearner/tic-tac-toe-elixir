@@ -1,5 +1,5 @@
 defmodule TicTacToe do
-  import Board, only: [make_initial_board: 0]
+  import Board, only: [make_initial_board: 1]
   import Game, only: [run_game: 2]
   import Marks
 
@@ -25,7 +25,7 @@ defmodule TicTacToe do
 
   def run do
     announce_welcome()
-    run_game(make_initial_board(), get_players())
+    run_game(make_initial_board(4), get_players())
     replay_choice = find_replay_choice(ask_replay())
 
     if replay_choice == @yes do

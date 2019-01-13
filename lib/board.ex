@@ -1,8 +1,8 @@
 defmodule Board do
   import Marks
 
-  def make_initial_board do
-    List.duplicate(empty_mark(), 9)
+  def make_initial_board(grid_size) do
+    List.duplicate(empty_mark(), grid_size * grid_size)
   end
 
   def place_mark(board, position, mark) do
@@ -29,7 +29,7 @@ defmodule Board do
     all_indices = get_all_indices(board)
     win_lines = Enum.map(all_indices, fn index_set -> get_marks(index_set, board) end)
     assessed_lines = Enum.map(win_lines, fn line -> line_won?(line, player_mark) end)
-    Enum.any?(assessed_lines, fn assessment -> assessment == true end)
+    Enum.member?(assessed_lines, true)
   end
 
   def line_won?(line, player_mark) do
@@ -49,32 +49,34 @@ defmodule Board do
     starting_points = 0..(dimension(board) - 1)
 
     Enum.map(starting_points, fn point ->
-      Enum.map(starting_points, fn deeper_point ->
-        deeper_point * dimension(board) + point
-      end)
+      generate_single_col(board, starting_points, point)
+    end)
+  end
+
+  defp generate_single_col(board, starting_points, point) do
+    Enum.map(starting_points, fn deeper_point ->
+      deeper_point * dimension(board) + point
     end)
   end
 
   def diag_indices(board) do
     starting_points_one = Enum.to_list(0..(dimension(board) - 1))
     first_diag = Enum.map(starting_points_one, fn point -> point * dimension(board) + point end)
+
     starting_points_two = Enum.to_list(1..dimension(board))
     second_diag = Enum.map(starting_points_two, fn point -> point * dimension(board) - point end)
+
     [first_diag, second_diag]
   end
 
-  def get_marks(indices, board) do
+  defp get_marks(indices, board) do
     Enum.map(indices, fn index ->
       get_mark(board, index)
     end)
   end
 
-  def get_mark(board, index) do
+  defp get_mark(board, index) do
     Enum.at(board, index)
-  end
-
-  def all_player_marks?(marks, player_mark) do
-    Enum.all?(marks, fn mark -> mark == player_mark end)
   end
 
   def dimension(board) do
@@ -82,26 +84,17 @@ defmodule Board do
   end
 
   def get_empty_tile_positions(board) do
-    indices = 0..length(board)
-    marks_with_indices = Enum.zip(board, indices)
-
-    positions =
-      Enum.map(marks_with_indices, fn tile_with_index ->
-        if elem(tile_with_index, 0) == empty_mark() do
-          elem(tile_with_index, 1)
-        else
-          nil
-        end
-      end)
-
-    Enum.reject(positions, fn position -> is_nil(position) end)
+    Enum.flat_map(Enum.with_index(board), fn tile_with_index ->
+      if elem(tile_with_index, 0) == empty_mark() do
+        [elem(tile_with_index, 1)]
+      else
+        []
+      end
+    end)
   end
 
   def generate_marked_board(empty_board, positions, mark) do
-    board_indices = 0..length(empty_board)
-    marks_with_indices = Enum.zip(empty_board, board_indices)
-
-    Enum.map(marks_with_indices, fn mark_with_index ->
+    Enum.map(Enum.with_index(empty_board), fn mark_with_index ->
       if Enum.member?(positions, elem(mark_with_index, 1)) do
         mark
       else

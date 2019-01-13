@@ -3,7 +3,7 @@ defmodule BoardTest do
   import Board
   import Marks
 
-  @empty_board make_initial_board()
+  @empty_board make_initial_board(3)
 
   test "places mark on board" do
     assert place_mark(@empty_board, 0, player_one_mark()) ==
@@ -51,18 +51,7 @@ defmodule BoardTest do
   end
 
   test "check all line indices are winning" do
-    line_indices = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ]
-
-    Enum.each(line_indices, fn indices ->
+    Enum.each(indices_for_3x3(), fn indices ->
       board = generate_marked_board(@empty_board, indices, player_one_mark())
       assert won?(board, player_one_mark())
     end)
@@ -75,16 +64,8 @@ defmodule BoardTest do
     refute won?(@empty_board, player_one_mark())
   end
 
-  test "get row indices" do
-    assert row_indices(@empty_board) == [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
-  end
-
-  test "get col indices" do
-    assert col_indices(@empty_board) == [[0, 3, 6], [1, 4, 7], [2, 5, 8]]
-  end
-
-  test "get diag indices" do
-    assert diag_indices(@empty_board) == [[0, 4, 8], [2, 4, 6]]
+  test "get all indices" do
+    assert get_all_indices(@empty_board) == indices_for_3x3()
   end
 
   test "get empty tiles" do
@@ -94,5 +75,18 @@ defmodule BoardTest do
 
   test "get max depth" do
     assert get_max_depth(@empty_board) == 10
+  end
+
+  defp indices_for_3x3 do
+    [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ]
   end
 end

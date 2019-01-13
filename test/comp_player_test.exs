@@ -39,14 +39,36 @@ defmodule CompPlayerTest do
     assert make_comp_move(board_3_start(), player_two_mark()) == board_3_with_move()
   end
 
-  test "get maxes" do
-    assert get_max_results([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
-    assert get_max_results([move: 4, score: 8], 2, 6) == [move: 4, score: 8]
+  test "get highest score set" do
+    assert get_max_results([move: nil, score: nil, alpha: -1000, beta: 1000], 2, 6) == [
+             move: 2,
+             score: 6,
+             alpha: 6,
+             beta: 1000
+           ]
+
+    assert get_max_results([move: 4, score: 8, alpha: 8, beta: 1000], 2, 6) == [
+             move: 4,
+             score: 8,
+             alpha: 8,
+             beta: 1000
+           ]
   end
 
-  test "get mins" do
-    assert get_min_results([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
-    assert get_min_results([move: 4, score: 3], 2, 6) == [move: 4, score: 3]
+  test "get lowest score set" do
+    assert get_min_results([move: nil, score: nil, alpha: -1000, beta: 1000], 2, 6) == [
+             move: 2,
+             score: 6,
+             alpha: -1000,
+             beta: 6
+           ]
+
+    assert get_min_results([move: 4, score: 3, alpha: -1000, beta: 3], 2, 6) == [
+             move: 4,
+             score: 3,
+             alpha: -1000,
+             beta: 3
+           ]
   end
 
   test "retrieve opposite player mark" do
@@ -71,16 +93,20 @@ defmodule CompPlayerTest do
   end
 
   test "maximise" do
-    assert maximise(board_1_start(), player_one_mark(), player_two_mark(), 0) == [
+    assert maximise(board_1_start(), player_one_mark(), player_two_mark(), 0, -1000, 1000) == [
              move: 8,
-             score: 0
+             score: 0,
+             alpha: 0,
+             beta: 1000
            ]
   end
 
   test "minimise" do
-    assert minimise(board_1_start(), player_one_mark(), player_two_mark(), 0) == [
+    assert minimise(board_1_start(), player_one_mark(), player_two_mark(), 0, -1000, 1000) == [
              move: 8,
-             score: -10
+             score: -10,
+             alpha: -1000,
+             beta: -10
            ]
   end
 

@@ -1,14 +1,7 @@
 defmodule CLI do
   import Prompts
-  import Globals, only: [newline: 0, remove_line: 1, valid_number?: 1]
 
-  defp convert_mark(mark) do
-    case mark do
-      :empty_mark -> :empty_mark
-      :player_one_mark -> "X"
-      :player_two_mark -> "O"
-    end
-  end
+  @newline "\r\n"
 
   def format_board(tiles) do
     tile_indices = 1..Enum.count(tiles)
@@ -25,8 +18,8 @@ defmodule CLI do
       end)
 
     square_bracks = Enum.map(formatted_tiles, fn tile -> ~s{[#{tile}] } end)
-    with_newlines = square_bracks |> List.insert_at(3, newline()) |> List.insert_at(7, newline())
-    ~s{#{List.to_string(with_newlines)}#{newline()}}
+    with_newlines = square_bracks |> List.insert_at(3, @newline) |> List.insert_at(7, @newline)
+    ~s{#{List.to_string(with_newlines)}#{@newline}}
   end
 
   def announce_welcome do
@@ -63,29 +56,27 @@ defmodule CLI do
     if valid_number?(tile_choice) do
       clean_number(tile_choice)
     else
-      clear_screen()
-      write_with_newlines(invalid_number_prompt())
-      write_with_newlines(format_board(board))
+    message_with_board(invalid_number_prompt(), board)
       get_tile_choice(board)
     end
   end
 
   def tile_not_in_range_message(board) do
-    clear_screen()
-    write_with_newlines(tile_not_in_range_prompt())
-    write_with_newlines(format_board(board))
+    message_with_board(tile_not_in_range_prompt(), board)
   end
 
   def tile_occupied_message(board) do
+    message_with_board(tile_occupied_prompt(), board)
+  end
+
+  defp message_with_board(message, board) do
     clear_screen()
-    write_with_newlines(tile_occupied_prompt())
+    write_with_newlines(message)
     write_with_newlines(format_board(board))
   end
 
   def turn_end_display(board) do
-    clear_screen()
-    write_with_newlines(choice_made_prompt())
-    write_with_newlines(format_board(board))
+    message_with_board(choice_made_prompt(), board)
     Process.sleep(1000)
   end
 
@@ -97,20 +88,57 @@ defmodule CLI do
     write_with_newlines(tie_prompt())
   end
 
-  def write_with_newlines(phrase) do
-    IO.write(newline() <> phrase <> newline())
+  def ask_replay do
+    replay_choice = ask_for_input(ask_replay_prompt())
+
+    if valid_y_or_n?(replay_choice) do
+      clean_y_or_n(replay_choice)
+    else
+      clear_screen()
+      write_with_newlines(invalid_y_or_n_prompt())
+      ask_replay()
+    end
+  end
+
+  def announce_goodbye do
+    write_with_newlines(goodbye_prompt())
+  end
+
+  defp write_with_newlines(phrase) do
+    IO.write(@newline <> phrase <> @newline)
   end
 
   def clean_number(number) do
-    String.to_integer(remove_line(number))
+    String.to_integer(String.trim(number))
   end
 
-  def ask_for_input(message) do
+  defp ask_for_input(message) do
     write_with_newlines(message)
     IO.gets("")
   end
 
   def clear_screen do
     IO.write(IO.ANSI.clear())
+  end
+
+  defp convert_mark(mark) do
+    case mark do
+      :empty_mark -> :empty_mark
+      :player_one_mark -> "X"
+      :player_two_mark -> "O"
+    end
+  end
+
+  def valid_y_or_n?(input) do
+    cleaned_input = clean_y_or_n(input)
+cleaned_input ==  "n" || cleaned_input ==  "y"
+  end
+
+  def clean_y_or_n(input) do
+    String.downcase(String.trim(input))
+  end
+
+  def valid_number?(input) do
+    Regex.match?(~r{^\d+$}, input)
   end
 end

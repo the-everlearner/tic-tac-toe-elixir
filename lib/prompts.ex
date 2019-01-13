@@ -25,4 +25,10 @@ defmodule Prompts do
   def win_prompt(mark), do: ~s{Player #{mark} won!}
 
   def tie_prompt, do: ~s{It was a tie...}
+
+  def ask_replay_prompt, do: ~s{Would you like to play again? Enter 'y' or 'n'}
+
+  def invalid_y_or_n_prompt, do: ~s{That's not a 'y' or 'n'}
+
+  def goodbye_prompt, do: ~s{Thanks for playing, bye!}
 end

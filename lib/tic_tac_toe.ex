@@ -9,11 +9,15 @@ defmodule TicTacToe do
       get_mode_choice: 0,
       invalid_mode_choice: 0,
       announce_goodbye: 0,
-      ask_replay: 0
+      ask_replay: 0,
+      ask_grid_size: 0,
+      invalid_grid_size_choice: 0
     ]
 
   import HumanPlayer, only: [make_human_move: 2]
   import CompPlayer, only: [make_comp_move: 2]
+
+  @possible_board_sizes [3, 4]
 
   @hvh :hvh
   @hvc :hvc
@@ -25,7 +29,7 @@ defmodule TicTacToe do
 
   def run do
     announce_welcome()
-    run_game(make_initial_board(4), get_players())
+    run_game(get_board(), get_players())
     replay_choice = find_replay_choice(ask_replay())
 
     if replay_choice == @yes do
@@ -35,11 +39,13 @@ defmodule TicTacToe do
     end
   end
 
-  def find_replay_choice(choice) do
-    if choice == "y" do
-      @yes
+  def get_board do
+    grid_size_choice = ask_grid_size()
+    if Enum.member?(@possible_board_sizes, grid_size_choice) do
+    make_initial_board(grid_size_choice)
     else
-      @no
+      invalid_grid_size_choice()
+      get_board()
     end
   end
 
@@ -95,4 +101,13 @@ defmodule TicTacToe do
         ]
     end
   end
+
+  def find_replay_choice(choice) do
+    if choice == "y" do
+      @yes
+    else
+      @no
+    end
+  end
+
 end

@@ -13,12 +13,33 @@ defmodule CLI do
   def announce_welcome do
     clear_screen()
     write_with_newlines(welcome_prompt())
+    Process.sleep(1000)
+      clear_screen()
+  end
+
+  def ask_grid_size do
+    grid_size_choice = ask_for_input(ask_grid_size_prompt())
+
+    if valid_number?(grid_size_choice) do
+    clear_screen()
+      clean_number(grid_size_choice)
+    else
+      clear_screen()
+      write_with_newlines(invalid_number_prompt())
+      ask_grid_size()
+    end
+  end
+
+  def invalid_grid_size_choice do
+    clear_screen()
+    write_with_newlines(invalid_grid_size_prompt())
   end
 
   def get_mode_choice do
     mode_choice = ask_for_input(ask_mode_prompt())
 
     if valid_number?(mode_choice) do
+    clear_screen()
       clean_number(mode_choice)
     else
       clear_screen()
@@ -36,6 +57,7 @@ defmodule CLI do
     clear_screen()
     write_with_newlines(introduce_game_prompt())
     write_with_newlines(format_board(board))
+    Process.sleep(1000)
   end
 
   def get_tile_choice(board) do

@@ -1,6 +1,10 @@
 defmodule Prompts do
   def welcome_prompt, do: ~s{Welcome to Tic Tac Toe!}
 
+  def ask_grid_size_prompt, do: ~s{What size of grid do you desire? Please enter '3' or '4'}
+
+    def invalid_grid_size_prompt, do: ~s{That's not a possible grid size}
+
   def ask_mode_prompt,
     do:
       ~s{Please select an option:\n'1' for human vs human mode\n'2' for human vs comp mode\n'3' for comp vs human mode\n'4' for comp vs comp mode}

@@ -40,13 +40,13 @@ defmodule CompPlayerTest do
   end
 
   test "get maxes" do
-    assert get_maxes([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
-    assert get_maxes([move: 4, score: 8], 2, 6) == [move: 4, score: 8]
+    assert get_max_results([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
+    assert get_max_results([move: 4, score: 8], 2, 6) == [move: 4, score: 8]
   end
 
   test "get mins" do
-    assert get_mins([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
-    assert get_mins([move: 4, score: 3], 2, 6) == [move: 4, score: 3]
+    assert get_min_results([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
+    assert get_min_results([move: 4, score: 3], 2, 6) == [move: 4, score: 3]
   end
 
   test "retrieve opposite player mark" do

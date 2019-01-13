@@ -2,7 +2,8 @@ defmodule Prompts do
   def welcome_prompt, do: ~s{Welcome to Tic Tac Toe!}
 
   def ask_mode_prompt,
-    do: ~s{Please select an option:\n'1' for human vs human mode\n'2' for human vs comp mode\n'3' for comp vs human mode\n'4' for comp vs comp mode}
+    do:
+      ~s{Please select an option:\n'1' for human vs human mode\n'2' for human vs comp mode\n'3' for comp vs human mode\n'4' for comp vs comp mode}
 
   def invalid_number_prompt,
     do: ~s{That's not a valid number!}

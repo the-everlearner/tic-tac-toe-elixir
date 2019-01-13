@@ -56,7 +56,7 @@ defmodule CLI do
     if valid_number?(tile_choice) do
       clean_number(tile_choice)
     else
-    message_with_board(invalid_number_prompt(), board)
+      message_with_board(invalid_number_prompt(), board)
       get_tile_choice(board)
     end
   end
@@ -131,7 +131,7 @@ defmodule CLI do
 
   def valid_y_or_n?(input) do
     cleaned_input = clean_y_or_n(input)
-cleaned_input ==  "n" || cleaned_input ==  "y"
+    cleaned_input == "n" || cleaned_input == "y"
   end
 
   def clean_y_or_n(input) do

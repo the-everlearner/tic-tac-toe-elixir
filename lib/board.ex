@@ -2,7 +2,7 @@ defmodule Board do
   import Marks
 
   def make_initial_board do
-  List.duplicate(empty_mark(), 9)
+    List.duplicate(empty_mark(), 9)
   end
 
   def place_mark(board, position, mark) do
@@ -48,11 +48,11 @@ defmodule Board do
   def col_indices(board) do
     starting_points = 0..(dimension(board) - 1)
 
-      Enum.map(starting_points, fn point ->
-        Enum.map(starting_points, fn deeper_point ->
-          deeper_point * dimension(board) + point
-        end)
+    Enum.map(starting_points, fn point ->
+      Enum.map(starting_points, fn deeper_point ->
+        deeper_point * dimension(board) + point
       end)
+    end)
   end
 
   def diag_indices(board) do

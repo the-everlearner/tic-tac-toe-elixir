@@ -2,7 +2,16 @@ defmodule TicTacToe do
   import Board, only: [make_initial_board: 0]
   import Game, only: [run_game: 2]
   import Marks
-  import CLI, only: [announce_welcome: 0, get_mode_choice: 0, invalid_mode_choice: 0, announce_goodbye: 0, ask_replay: 0]
+
+  import CLI,
+    only: [
+      announce_welcome: 0,
+      get_mode_choice: 0,
+      invalid_mode_choice: 0,
+      announce_goodbye: 0,
+      ask_replay: 0
+    ]
+
   import HumanPlayer, only: [make_human_move: 2]
   import CompPlayer, only: [make_comp_move: 2]
 
@@ -18,6 +27,7 @@ defmodule TicTacToe do
     announce_welcome()
     run_game(make_initial_board(), get_players())
     replay_choice = find_replay_choice(ask_replay())
+
     if replay_choice == @yes do
       run()
     else

@@ -13,6 +13,7 @@ defmodule CompPlayerTest do
     X 8 9
     Optimum move for O player: 9
     """
+
     assert make_comp_move(board_1_start(), player_two_mark()) == board_1_with_move()
   end
 
@@ -23,6 +24,7 @@ defmodule CompPlayerTest do
     X O O
     Optimum move for O player: 5
     """
+
     assert make_comp_move(board_2_start(), player_two_mark()) == board_2_with_move()
   end
 
@@ -33,7 +35,18 @@ defmodule CompPlayerTest do
     O O X
     Optimum move for O player: 3
     """
+
     assert make_comp_move(board_3_start(), player_two_mark()) == board_3_with_move()
+  end
+
+  test "get maxes" do
+    assert get_maxes([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
+    assert get_maxes([move: 4, score: 8], 2, 6) == [move: 4, score: 8]
+  end
+
+  test "get mins" do
+    assert get_mins([move: nil, score: nil], 2, 6) == [move: 2, score: 6]
+    assert get_mins([move: 4, score: 3], 2, 6) == [move: 4, score: 3]
   end
 
   test "retrieve opposite player mark" do
@@ -58,35 +71,25 @@ defmodule CompPlayerTest do
   end
 
   test "maximise" do
-    board = generate_marked_board(@empty_board, [0, 1, 2, 3, 4, 5, 6, 7], player_one_mark())
-
-    assert maximise(board, player_one_mark(), player_two_mark(), 0) == [move: 8, score: 10]
-  end
-
-  test "find max" do
-    tiles_with_scores = [[move: 4, score: 7], [move: 7, score: 9], [move: 8, score: -10]]
-
-    assert find_max(tiles_with_scores) == [move: 7, score: 9]
+    assert maximise(board_1_start(), player_one_mark(), player_two_mark(), 0) == [
+             move: 8,
+             score: 0
+           ]
   end
 
   test "minimise" do
-    board = generate_marked_board(@empty_board, [0, 1, 2, 3, 4, 5, 6, 7], player_two_mark())
-
-    assert minimise(board, player_one_mark(), player_two_mark(), 0) == [move: 8, score: -10]
-  end
-
-  test "find min" do
-    tiles_with_scores = [[move: 4, score: 7], [move: 7, score: 9], [move: 8, score: -10]]
-
-    assert find_min(tiles_with_scores) == [move: 8, score: -10]
+    assert minimise(board_1_start(), player_one_mark(), player_two_mark(), 0) == [
+             move: 8,
+             score: -10
+           ]
   end
 
   def board_1_start do
     generate_marked_board(@empty_board, [1, 5, 6], player_one_mark())
-            |> List.replace_at(0, player_two_mark())
-            |> List.replace_at(2, player_two_mark())
-            |> List.replace_at(3, player_two_mark())
-            |> List.replace_at(4, player_two_mark())
+    |> List.replace_at(0, player_two_mark())
+    |> List.replace_at(2, player_two_mark())
+    |> List.replace_at(3, player_two_mark())
+    |> List.replace_at(4, player_two_mark())
   end
 
   def board_1_with_move do
@@ -95,10 +98,10 @@ defmodule CompPlayerTest do
 
   def board_2_start do
     generate_marked_board(@empty_board, [1, 5, 6], player_one_mark())
-            |> List.replace_at(0, player_two_mark())
-            |> List.replace_at(2, player_two_mark())
-            |> List.replace_at(7, player_two_mark())
-            |> List.replace_at(8, player_two_mark())
+    |> List.replace_at(0, player_two_mark())
+    |> List.replace_at(2, player_two_mark())
+    |> List.replace_at(7, player_two_mark())
+    |> List.replace_at(8, player_two_mark())
   end
 
   def board_2_with_move do
@@ -107,8 +110,8 @@ defmodule CompPlayerTest do
 
   def board_3_start do
     generate_marked_board(@empty_board, [1, 5, 8], player_one_mark())
-            |> List.replace_at(6, player_two_mark())
-            |> List.replace_at(7, player_two_mark())
+    |> List.replace_at(6, player_two_mark())
+    |> List.replace_at(7, player_two_mark())
   end
 
   def board_3_with_move do

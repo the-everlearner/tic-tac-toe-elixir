@@ -60,25 +60,25 @@ defmodule CompPlayerTest do
   test "maximise" do
     board = generate_marked_board(@empty_board, [0, 1, 2, 3, 4, 5, 6, 7], player_one_mark())
 
-    assert maximise(board, player_one_mark(), player_two_mark(), 0) == {8, 10}
+    assert maximise(board, player_one_mark(), player_two_mark(), 0) == [move: 8, score: 10]
   end
 
   test "find max" do
-    tiles_with_scores = [{4, 7}, {7, 9}, {8, -10}]
+    tiles_with_scores = [[move: 4, score: 7], [move: 7, score: 9], [move: 8, score: -10]]
 
-    assert find_max(tiles_with_scores) == {7, 9}
+    assert find_max(tiles_with_scores) == [move: 7, score: 9]
   end
 
   test "minimise" do
     board = generate_marked_board(@empty_board, [0, 1, 2, 3, 4, 5, 6, 7], player_two_mark())
 
-    assert minimise(board, player_one_mark(), player_two_mark(), 0) == {8, -10}
+    assert minimise(board, player_one_mark(), player_two_mark(), 0) == [move: 8, score: -10]
   end
 
   test "find min" do
-    tiles_with_scores = [{4, 7}, {7, 9}, {8, -10}]
+    tiles_with_scores = [[move: 4, score: 7], [move: 7, score: 9], [move: 8, score: -10]]
 
-    assert find_min(tiles_with_scores) == {8, -10}
+    assert find_min(tiles_with_scores) == [move: 8, score: -10]
   end
 
   def board_1_start do

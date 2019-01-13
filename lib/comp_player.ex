@@ -3,43 +3,39 @@ defmodule CompPlayer do
   import Marks
 
   def make_comp_move(board, player) do
-    move = elem(maximise(board, player, get_opponent(player), 0), 0)
+    move = maximise(board, player, get_opponent(player), 0)[:move]
     place_mark(board, move, player)
   end
 
   def maximise(board, minimaxer, opponent, depth) do
     empty_tile_positions = get_empty_tile_positions(board)
 
-    scores =
+    tiles_with_scores =
       Enum.map(empty_tile_positions, fn position ->
         next_board = place_mark(board, position, minimaxer)
 
         if finished?(next_board, minimaxer) do
-          score_board(next_board, minimaxer, opponent, depth)
+          [move: position, score: score_board(next_board, minimaxer, opponent, depth)]
         else
-          elem(minimise(next_board, minimaxer, opponent, depth + 1), 1)
+          [move: position, score: minimise(next_board, minimaxer, opponent, depth + 1)[:score]]
         end
       end)
-
-    tiles_with_scores = Enum.zip(empty_tile_positions, scores)
     find_max(tiles_with_scores)
   end
 
   def minimise(board, minimaxer, opponent, depth) do
     empty_tile_positions = get_empty_tile_positions(board)
 
-    scores =
+    tiles_with_scores =
       Enum.map(empty_tile_positions, fn position ->
         next_board = place_mark(board, position, opponent)
 
         if finished?(next_board, opponent) do
-          score_board(next_board, minimaxer, opponent, depth)
+          [move: position, score: score_board(next_board, minimaxer, opponent, depth)]
         else
-          elem(maximise(next_board, minimaxer, opponent, depth + 1), 1)
+          [move: position, score: maximise(next_board, minimaxer, opponent, depth + 1)[:score]]
         end
       end)
-
-    tiles_with_scores = Enum.zip(empty_tile_positions, scores)
     find_min(tiles_with_scores)
   end
 
@@ -61,7 +57,7 @@ defmodule CompPlayer do
 
   def find_max(tiles_with_scores) do
     Enum.reduce(tiles_with_scores, fn current_max_tile, next_tile ->
-      if elem(next_tile, 1) > elem(current_max_tile, 1) do
+      if next_tile[:score] > current_max_tile[:score] do
         next_tile
       else
         current_max_tile
@@ -71,7 +67,7 @@ defmodule CompPlayer do
 
   def find_min(tiles_with_scores) do
     Enum.reduce(tiles_with_scores, fn current_min_tile, next_tile ->
-      if elem(next_tile, 1) < elem(current_min_tile, 1) do
+      if next_tile[:score] < current_min_tile[:score] do
         next_tile
       else
         current_min_tile

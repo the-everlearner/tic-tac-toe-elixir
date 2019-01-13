@@ -14,14 +14,14 @@ defmodule CLI do
     clear_screen()
     write_with_newlines(welcome_prompt())
     Process.sleep(1000)
-      clear_screen()
+    clear_screen()
   end
 
   def ask_grid_size do
     grid_size_choice = ask_for_input(ask_grid_size_prompt())
 
     if valid_number?(grid_size_choice) do
-    clear_screen()
+      clear_screen()
       clean_number(grid_size_choice)
     else
       clear_screen()
@@ -39,7 +39,7 @@ defmodule CLI do
     mode_choice = ask_for_input(ask_mode_prompt())
 
     if valid_number?(mode_choice) do
-    clear_screen()
+      clear_screen()
       clean_number(mode_choice)
     else
       clear_screen()
@@ -156,18 +156,18 @@ defmodule CLI do
     converted_mark = convert_mark(elem(tile_with_number, 0))
 
     if converted_mark != :empty_mark do
-    ~s{[#{converted_mark}]  }
+      ~s{[#{converted_mark}]  }
     else
-    format_number_tile(elem(tile_with_number, 1) + 1)
+      format_number_tile(elem(tile_with_number, 1) + 1)
     end
   end
 
   defp format_number_tile(number) do
-      if number > 9 do
-    ~s{[#{number}] }
-      else
-    ~s{[#{number}]  }
-      end
+    if number > 9 do
+      ~s{[#{number}] }
+    else
+      ~s{[#{number}]  }
+    end
   end
 
   defp insert_newlines(converted_tiles) do

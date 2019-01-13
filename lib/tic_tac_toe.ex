@@ -19,10 +19,8 @@ defmodule TicTacToe do
 
   @possible_board_sizes [3, 4]
 
-  @hvh :hvh
-  @hvc :hvc
-  @cvh :cvh
-  @cvc :cvc
+  @h :h
+  @c :c
 
   @yes :yes
   @no :no
@@ -30,9 +28,11 @@ defmodule TicTacToe do
   def run do
     announce_welcome()
     run_game(get_board(), get_players())
-    replay_choice = find_replay_choice(ask_replay())
+    replay?()
+  end
 
-    if replay_choice == @yes do
+  def replay? do
+    if find_replay_choice(ask_replay()) == @yes do
       run()
     else
       announce_goodbye()
@@ -41,8 +41,9 @@ defmodule TicTacToe do
 
   def get_board do
     grid_size_choice = ask_grid_size()
+
     if Enum.member?(@possible_board_sizes, grid_size_choice) do
-    make_initial_board(grid_size_choice)
+      make_initial_board(grid_size_choice)
     else
       invalid_grid_size_choice()
       get_board()
@@ -50,55 +51,37 @@ defmodule TicTacToe do
   end
 
   def get_players do
-    mode = find_mode()
-    make_players(mode)
-  end
-
-  def find_mode do
     case get_mode_choice() do
       1 ->
-        @hvh
+        players_template(@h, @h)
 
       2 ->
-        @hvc
+        players_template(@h, @c)
 
       3 ->
-        @cvh
+        players_template(@c, @h)
 
       4 ->
-        @cvc
+        players_template(@c, @c)
 
       _ ->
         invalid_mode_choice()
-        find_mode()
+        get_players()
     end
   end
 
-  def make_players(mode) do
-    case mode do
-      @hvh ->
-        [
-          [make_move: &make_human_move/2, mark: player_one_mark()],
-          [make_move: &make_human_move/2, mark: player_two_mark()]
-        ]
+  def players_template(type_one, type_two) do
+    [
+      [make_move: find_tile_fun(type_one), mark: player_one_mark()],
+      [make_move: find_tile_fun(type_two), mark: player_two_mark()]
+    ]
+  end
 
-      @hvc ->
-        [
-          [make_move: &make_human_move/2, mark: player_one_mark()],
-          [make_move: &make_comp_move/2, mark: player_two_mark()]
-        ]
-
-      @cvh ->
-        [
-          [make_move: &make_comp_move/2, mark: player_one_mark()],
-          [make_move: &make_human_move/2, mark: player_two_mark()]
-        ]
-
-      @cvc ->
-        [
-          [make_move: &make_comp_move/2, mark: player_one_mark()],
-          [make_move: &make_comp_move/2, mark: player_two_mark()]
-        ]
+  def find_tile_fun(type) do
+    if type == @h do
+      &make_human_move/2
+    else
+      &make_comp_move/2
     end
   end
 
@@ -109,5 +92,4 @@ defmodule TicTacToe do
       @no
     end
   end
-
 end

@@ -13,7 +13,7 @@ defmodule CompPlayer do
     place_mark(board, move, player)
   end
 
-  def maximise(board, minimaxer, opponent, depth, initial_alpha, initial_beta) do
+  defp maximise(board, minimaxer, opponent, depth, initial_alpha, initial_beta) do
     Enum.reduce(
       get_empty_tile_positions(board),
       [move: nil, score: nil, alpha: initial_alpha, beta: initial_beta],
@@ -39,7 +39,7 @@ defmodule CompPlayer do
     )
   end
 
-  def minimise(board, minimaxer, opponent, depth, initial_alpha, initial_beta) do
+  defp minimise(board, minimaxer, opponent, depth, initial_alpha, initial_beta) do
     Enum.reduce(
       get_empty_tile_positions(board),
       [move: nil, score: nil, alpha: initial_alpha, beta: initial_beta],
@@ -65,7 +65,7 @@ defmodule CompPlayer do
     )
   end
 
-  def get_maximiser_score(next_board, minimaxer, opponent, depth, alpha, beta) do
+  defp get_maximiser_score(next_board, minimaxer, opponent, depth, alpha, beta) do
     if finished?(next_board, minimaxer) do
       score_board(next_board, minimaxer, opponent, depth)
     else
@@ -73,7 +73,7 @@ defmodule CompPlayer do
     end
   end
 
-  def get_minimiser_score(next_board, minimaxer, opponent, depth, alpha, beta) do
+  defp get_minimiser_score(next_board, minimaxer, opponent, depth, alpha, beta) do
     if finished?(next_board, opponent) do
       score_board(next_board, minimaxer, opponent, depth)
     else
@@ -81,7 +81,7 @@ defmodule CompPlayer do
     end
   end
 
-  def get_max_results(current_set, next_position, next_score) do
+  defp get_max_results(current_set, next_position, next_score) do
     if is_nil(current_set[:score]) || next_score > current_set[:score] do
       [move: next_position, score: next_score, alpha: next_score, beta: current_set[:beta]]
     else
@@ -89,7 +89,7 @@ defmodule CompPlayer do
     end
   end
 
-  def get_min_results(current_set, next_position, next_score) do
+  defp get_min_results(current_set, next_position, next_score) do
     if is_nil(current_set[:score]) || next_score < current_set[:score] do
       [move: next_position, score: next_score, alpha: current_set[:alpha], beta: next_score]
     else
@@ -97,7 +97,7 @@ defmodule CompPlayer do
     end
   end
 
-  def score_board(board, minimaxer, opponent, depth) do
+  defp score_board(board, minimaxer, opponent, depth) do
     cond do
       won?(board, minimaxer) -> get_max_depth(board) - depth
       won?(board, opponent) -> depth - get_max_depth(board)
@@ -105,7 +105,7 @@ defmodule CompPlayer do
     end
   end
 
-  def get_opponent(player) do
+  defp get_opponent(player) do
     if player == player_one_mark() do
       player_two_mark()
     else

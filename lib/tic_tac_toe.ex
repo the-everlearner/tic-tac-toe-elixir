@@ -2,6 +2,8 @@ defmodule TicTacToe do
   import Board, only: [make_initial_board: 1]
   import Game, only: [run_game: 2]
   import Marks
+  import HumanPlayer, only: [make_human_move: 2]
+  import CompPlayer, only: [make_comp_move: 2]
 
   import CLI,
     only: [
@@ -14,9 +16,6 @@ defmodule TicTacToe do
       invalid_grid_size_choice: 0
     ]
 
-  import HumanPlayer, only: [make_human_move: 2]
-  import CompPlayer, only: [make_comp_move: 2]
-
   @possible_board_sizes [3, 4]
 
   @human :human
@@ -24,12 +23,12 @@ defmodule TicTacToe do
 
   def run do
     announce_welcome()
-    run_game(get_board(), get_players())
-    replay?()
+    run_game(get_board(), get_players(get_mode_choice()))
+    replay?(ask_replay())
   end
 
-  def replay? do
-    if ask_replay() == :yes do
+  def replay?(replay_choice) do
+    if replay_choice == :yes do
       run()
     else
       announce_goodbye()
@@ -47,8 +46,8 @@ defmodule TicTacToe do
     end
   end
 
-  def get_players do
-    case get_mode_choice() do
+  def get_players(mode_choice) do
+    case mode_choice do
       1 ->
         players_template(@human, @human)
 
@@ -63,18 +62,18 @@ defmodule TicTacToe do
 
       _ ->
         invalid_mode_choice()
-        get_players()
+        get_players(get_mode_choice())
     end
   end
 
-  def players_template(type_one, type_two) do
+  defp players_template(type_1, type_2) do
     [
-      [make_move: find_tile_fun(type_one), mark: player_one_mark()],
-      [make_move: find_tile_fun(type_two), mark: player_two_mark()]
+      [make_move: find_mark_board_fun(type_1), mark: player_one_mark()],
+      [make_move: find_mark_board_fun(type_2), mark: player_two_mark()]
     ]
   end
 
-  def find_tile_fun(type) do
+  defp find_mark_board_fun(type) do
     if type == @human do
       &make_human_move/2
     else

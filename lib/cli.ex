@@ -85,7 +85,7 @@ defmodule CLI do
     write_with_newlines(format_board(board))
   end
 
-  def turn_end_display(board) do
+  def display_turn(board) do
     message_with_board(choice_made_prompt(), board)
     Process.sleep(1000)
   end

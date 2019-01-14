@@ -111,11 +111,11 @@ defmodule CLI do
   end
 
   def send_yes_or_no(input) do
-      if input == "y" do
-        :yes
-      else
-        :no
-      end
+    if input == "y" do
+      :yes
+    else
+      :no
+    end
   end
 
   def announce_goodbye do

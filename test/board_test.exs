@@ -2,13 +2,9 @@ defmodule BoardTest do
   use ExUnit.Case
   import Board
   import Marks
+  Code.require_file("board_helper.exs", __DIR__)
 
   @empty_board make_initial_board(3)
-
-  test "places mark on board" do
-    assert place_mark(@empty_board, 0, player_one_mark()) ==
-             generate_marked_board(@empty_board, [0], player_one_mark())
-  end
 
   test "whether position is in range" do
     assert in_range?(@empty_board, 0) == true
@@ -22,7 +18,7 @@ defmodule BoardTest do
   end
 
   test "return true if tile occupied" do
-    board = generate_marked_board(@empty_board, [0], player_one_mark())
+    board = BoardHelper.generate_marked_board(@empty_board, [0], player_one_mark())
 
     assert tile_occupied?(board, 0) == true
   end
@@ -32,7 +28,7 @@ defmodule BoardTest do
   end
 
   test "returns true if game finished" do
-    won_board = generate_marked_board(@empty_board, [0, 1, 2], player_one_mark())
+    won_board = BoardHelper.generate_marked_board(@empty_board, [0, 1, 2], player_one_mark())
 
     assert finished?(won_board, player_one_mark()) == true
   end
@@ -50,30 +46,26 @@ defmodule BoardTest do
     assert dimension(@empty_board) === 3
   end
 
-  test "check all line indices are winning" do
-    Enum.each(indices_for_3x3(), fn indices ->
-      board = generate_marked_board(@empty_board, indices, player_one_mark())
-      assert won?(board, player_one_mark())
-    end)
-  end
-
   test "returns false if board not won" do
-    not_won_board = generate_marked_board(@empty_board, [0, 1, 3], player_one_mark())
+    not_won_board = BoardHelper.generate_marked_board(@empty_board, [0, 1, 3], player_one_mark())
 
     refute won?(not_won_board, player_one_mark())
     refute won?(@empty_board, player_one_mark())
   end
 
-  test "get all indices" do
-    assert get_all_indices(@empty_board) == indices_for_3x3()
+  test "check all correct lines are winning on 3x3 board" do
+    Enum.each(indices_for_3x3(), fn indices ->
+      board = BoardHelper.generate_marked_board(@empty_board, indices, player_one_mark())
+      assert won?(board, player_one_mark())
+    end)
   end
 
   test "get empty tiles" do
-    board = generate_marked_board(@empty_board, [0, 1, 3], player_one_mark())
+    board = BoardHelper.generate_marked_board(@empty_board, [0, 1, 3], player_one_mark())
     assert get_empty_tile_positions(board) == [2, 4, 5, 6, 7, 8]
   end
 
-  test "get max depth" do
+  test "get max depth for 3x3" do
     assert get_max_depth(@empty_board) == 10
   end
 

@@ -1,8 +1,9 @@
 defmodule CompPlayerTest do
   use ExUnit.Case
   import CompPlayer
-  import Board, only: [make_initial_board: 1, generate_marked_board: 3]
+  import Board, only: [make_initial_board: 1]
   import Marks
+  Code.require_file("board_helper.exs", __DIR__)
 
   @empty_board make_initial_board(3)
 
@@ -77,13 +78,13 @@ defmodule CompPlayerTest do
   end
 
   test "scores board positively for win" do
-    p1_won_board = generate_marked_board(@empty_board, [0, 1, 2], player_one_mark())
+    p1_won_board = BoardHelper.generate_marked_board(@empty_board, [0, 1, 2], player_one_mark())
 
     assert score_board(p1_won_board, player_one_mark(), player_two_mark(), 0) == 10
   end
 
   test "scores board negatively for loss by minimaxing player" do
-    p1_won_board = generate_marked_board(@empty_board, [0, 1, 2], player_two_mark())
+    p1_won_board = BoardHelper.generate_marked_board(@empty_board, [0, 1, 2], player_two_mark())
 
     assert score_board(p1_won_board, player_one_mark(), player_two_mark(), 0) == -10
   end
@@ -111,7 +112,7 @@ defmodule CompPlayerTest do
   end
 
   def board_1_start do
-    generate_marked_board(@empty_board, [1, 5, 6], player_one_mark())
+    BoardHelper.generate_marked_board(@empty_board, [1, 5, 6], player_one_mark())
     |> List.replace_at(0, player_two_mark())
     |> List.replace_at(2, player_two_mark())
     |> List.replace_at(3, player_two_mark())
@@ -123,7 +124,7 @@ defmodule CompPlayerTest do
   end
 
   def board_2_start do
-    generate_marked_board(@empty_board, [1, 5, 6], player_one_mark())
+    BoardHelper.generate_marked_board(@empty_board, [1, 5, 6], player_one_mark())
     |> List.replace_at(0, player_two_mark())
     |> List.replace_at(2, player_two_mark())
     |> List.replace_at(7, player_two_mark())
@@ -135,7 +136,7 @@ defmodule CompPlayerTest do
   end
 
   def board_3_start do
-    generate_marked_board(@empty_board, [1, 5, 8], player_one_mark())
+    BoardHelper.generate_marked_board(@empty_board, [1, 5, 8], player_one_mark())
     |> List.replace_at(6, player_two_mark())
     |> List.replace_at(7, player_two_mark())
   end

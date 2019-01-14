@@ -19,11 +19,8 @@ defmodule TicTacToe do
 
   @possible_board_sizes [3, 4]
 
-  @h :h
-  @c :c
-
-  @yes :yes
-  @no :no
+  @human :human
+  @comp :comp
 
   def run do
     announce_welcome()
@@ -32,7 +29,7 @@ defmodule TicTacToe do
   end
 
   def replay? do
-    if find_replay_choice(ask_replay()) == @yes do
+    if ask_replay() == :yes do
       run()
     else
       announce_goodbye()
@@ -53,16 +50,16 @@ defmodule TicTacToe do
   def get_players do
     case get_mode_choice() do
       1 ->
-        players_template(@h, @h)
+        players_template(@human, @human)
 
       2 ->
-        players_template(@h, @c)
+        players_template(@human, @comp)
 
       3 ->
-        players_template(@c, @h)
+        players_template(@comp, @human)
 
       4 ->
-        players_template(@c, @c)
+        players_template(@comp, @comp)
 
       _ ->
         invalid_mode_choice()
@@ -78,18 +75,10 @@ defmodule TicTacToe do
   end
 
   def find_tile_fun(type) do
-    if type == @h do
+    if type == @human do
       &make_human_move/2
     else
       &make_comp_move/2
-    end
-  end
-
-  def find_replay_choice(choice) do
-    if choice == "y" do
-      @yes
-    else
-      @no
     end
   end
 end

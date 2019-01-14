@@ -26,26 +26,34 @@ defmodule Board do
   end
 
   def won?(board, player_mark) do
-    all_indices = get_all_indices(board)
-    win_lines = Enum.map(all_indices, fn index_set -> get_marks(index_set, board) end)
-    assessed_lines = Enum.map(win_lines, fn line -> line_won?(line, player_mark) end)
-    Enum.member?(assessed_lines, true)
+    get_all_indices(board)
+    |> get_all_marks(board)
+    |> check_for_won_line(player_mark)
   end
 
-  def line_won?(line, player_mark) do
+  defp check_for_won_line(lines, player_mark) do
+    Enum.map(lines, fn line -> line_won?(line, player_mark) end)
+    |> Enum.member?(true)
+  end
+
+  defp line_won?(line, player_mark) do
     Enum.all?(line, fn mark -> mark == player_mark end)
+  end
+
+  defp get_all_marks(all_indices, board) do
+    Enum.map(all_indices, fn index_set -> get_marks(index_set, board) end)
   end
 
   def get_all_indices(board) do
     row_indices(board) ++ col_indices(board) ++ diag_indices(board)
   end
 
-  def row_indices(board) do
+  defp row_indices(board) do
     board_indices = 0..length(board)
     Enum.chunk_every(board_indices, dimension(board), dimension(board), :discard)
   end
 
-  def col_indices(board) do
+  defp col_indices(board) do
     starting_points = 0..(dimension(board) - 1)
 
     Enum.map(starting_points, fn point ->

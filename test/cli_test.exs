@@ -39,6 +39,11 @@ defmodule CLITest do
     refute valid_y_or_n?("")
   end
 
+  test "sends yes or no" do
+    assert send_yes_or_no("y") == :yes
+    assert send_yes_or_no("n") == :no
+  end
+
   def marked_board_1 do
     @empty_3x3 |> List.replace_at(2, player_one_mark()) |> List.replace_at(4, player_two_mark())
   end

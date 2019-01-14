@@ -102,12 +102,20 @@ defmodule CLI do
     replay_choice = ask_for_input(ask_replay_prompt())
 
     if valid_y_or_n?(replay_choice) do
-      clean_y_or_n(replay_choice)
+      send_yes_or_no(clean_y_or_n(replay_choice))
     else
       clear_screen()
       write_with_newlines(invalid_y_or_n_prompt())
       ask_replay()
     end
+  end
+
+  def send_yes_or_no(input) do
+      if input == "y" do
+        :yes
+      else
+        :no
+      end
   end
 
   def announce_goodbye do

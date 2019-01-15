@@ -21,9 +21,9 @@ A command-line Tic Tac Toe game app written in Elixir.
 ### Play
 To play from the command line, build the escript then run the generated executable:
 
-	`$ mix escript.build`
+`$ mix escript.build`
 
-	`$ ./tic_tac_toe`
+`$ ./tic_tac_toe`
 
 ### Features
 - Four game modes

@@ -12,8 +12,8 @@ defmodule TicTacToe do
       invalid_mode_choice: 0,
       announce_goodbye: 0,
       ask_replay: 0,
-      ask_grid_size: 0,
-      invalid_grid_size_choice: 0
+      ask_board_size: 0,
+      invalid_board_size_choice: 0
     ]
 
   @possible_board_sizes [3, 4]
@@ -36,17 +36,27 @@ defmodule TicTacToe do
   end
 
   def get_board do
-    grid_size_choice = ask_grid_size()
+    board_size_choice = ask_board_size()
 
-    if Enum.member?(@possible_board_sizes, grid_size_choice) do
-      make_initial_board(grid_size_choice)
+    if possible_board_size?(board_size_choice) do
+      make_initial_board(board_size_choice)
     else
-      invalid_grid_size_choice()
+      invalid_board_size_choice()
       get_board()
     end
   end
 
   def get_players(mode_choice) do
+    allocated_mode = allocate_mode(mode_choice)
+    if allocated_mode == :invalid_mode_choice do
+        invalid_mode_choice()
+        get_players(get_mode_choice())
+    else
+      allocated_mode
+    end
+  end
+
+  def allocate_mode(mode_choice) do
     case mode_choice do
       1 ->
         players_template(@human, @human)
@@ -61,8 +71,7 @@ defmodule TicTacToe do
         players_template(@comp, @comp)
 
       _ ->
-        invalid_mode_choice()
-        get_players(get_mode_choice())
+        :invalid_mode_choice
     end
   end
 
@@ -79,5 +88,9 @@ defmodule TicTacToe do
     else
       &make_comp_move/2
     end
+  end
+
+  defp possible_board_size?(size) do
+Enum.member?(@possible_board_sizes, size)
   end
 end

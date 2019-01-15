@@ -1,9 +1,9 @@
 defmodule Prompts do
   def welcome_prompt, do: ~s{Welcome to Tic Tac Toe!}
 
-  def ask_grid_size_prompt, do: ~s{What size of grid do you desire? Please enter '3' or '4'}
+  def ask_board_size_prompt, do: ~s{What size of grid do you desire? Please enter '3' or '4'}
 
-  def invalid_grid_size_prompt, do: ~s{That's not a possible grid size}
+  def invalid_board_size_prompt, do: ~s{That's not a possible grid size}
 
   def ask_mode_prompt,
     do:

@@ -17,22 +17,22 @@ defmodule CLI do
     clear_screen()
   end
 
-  def ask_grid_size do
-    grid_size_choice = ask_for_input(ask_grid_size_prompt())
+  def ask_board_size do
+    board_size_choice = ask_for_input(ask_board_size_prompt())
 
-    if valid_number?(grid_size_choice) do
+    if valid_number?(board_size_choice) do
       clear_screen()
-      clean_number(grid_size_choice)
+      clean_number(board_size_choice)
     else
       clear_screen()
       write_with_newlines(invalid_number_prompt())
-      ask_grid_size()
+      ask_board_size()
     end
   end
 
-  def invalid_grid_size_choice do
+  def invalid_board_size_choice do
     clear_screen()
-    write_with_newlines(invalid_grid_size_prompt())
+    write_with_newlines(invalid_board_size_prompt())
   end
 
   def get_mode_choice do

@@ -13,7 +13,7 @@ defmodule TicTacToe.MixProject do
   end
 
   defp escript do
-    [main_module: Main, embed_elixir: true]
+    [main_module: Main]
   end
 
   def application do

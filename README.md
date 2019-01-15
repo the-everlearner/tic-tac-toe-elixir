@@ -22,7 +22,7 @@ To play from the command line, build the escript then run the generated executab
 ### Features
 - Four game modes
 - Two board sizes
-- Unbeatable computer player 
+- Unbeatable computer player (minimax with alpha-beta pruning)
 
 ### Known Bugs
 - Unbeatable computer player is slow on 4x4 board

@@ -2,15 +2,26 @@ defmodule CompPlayer do
   import Marks
 
   import Board,
-    only: [place_mark: 3, won?: 2, get_empty_tile_positions: 1, finished?: 2, get_max_depth: 1]
+    only: [
+      place_mark: 3,
+      won?: 2,
+      get_empty_tile_positions: 1,
+      finished?: 2,
+      get_max_depth: 1,
+      tile_occupied?: 2
+    ]
 
   @tied_score 0
   @highest_alpha -1000
   @lowest_beta 1000
 
   def make_comp_move(board, player) do
-    move = maximise(board, player, get_opponent(player), 0, @highest_alpha, @lowest_beta)[:move]
-    place_mark(board, move, player)
+    if bigger_than_3x3?(board) && count_player_marks(board) < 6 do
+      place_mark(board, generate_random_move(board), player)
+    else
+      move = maximise(board, player, get_opponent(player), 0, @highest_alpha, @lowest_beta)[:move]
+      place_mark(board, move, player)
+    end
   end
 
   defp maximise(board, minimaxer, opponent, depth, initial_alpha, initial_beta) do
@@ -110,6 +121,26 @@ defmodule CompPlayer do
       player_two_mark()
     else
       player_one_mark()
+    end
+  end
+
+  defp count_player_marks(board) do
+    p1 = Enum.count(board, fn mark -> mark == player_one_mark() end)
+    p2 = Enum.count(board, fn mark -> mark == player_two_mark() end)
+    p1 + p2
+  end
+
+  defp bigger_than_3x3?(board) do
+    length(board) > 9
+  end
+
+  defp generate_random_move(board) do
+    move = Enum.random(0..(length(board) - 1))
+
+    if tile_occupied?(board, move) do
+      generate_random_move(board)
+    else
+      move
     end
   end
 end

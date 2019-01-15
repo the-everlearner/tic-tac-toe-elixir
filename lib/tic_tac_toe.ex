@@ -48,9 +48,10 @@ defmodule TicTacToe do
 
   def get_players(mode_choice) do
     allocated_mode = allocate_mode(mode_choice)
+
     if allocated_mode == :invalid_mode_choice do
-        invalid_mode_choice()
-        get_players(get_mode_choice())
+      invalid_mode_choice()
+      get_players(get_mode_choice())
     else
       allocated_mode
     end
@@ -91,6 +92,6 @@ defmodule TicTacToe do
   end
 
   defp possible_board_size?(size) do
-Enum.member?(@possible_board_sizes, size)
+    Enum.member?(@possible_board_sizes, size)
   end
 end

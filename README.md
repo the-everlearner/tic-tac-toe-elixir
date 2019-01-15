@@ -31,7 +31,7 @@ To play from the command line, build the escript then run the generated executab
 - Unbeatable computer player (minimax with alpha-beta pruning)
 
 ### Known Bugs
-- Unbeatable computer player is slow on 4x4 board
+- In some cases, it is possible to win on a 4x4 board in a human v comp match on the 8th move - if not won by then, it is not possible to win. All other computer games are unbeatable.
 
 ### Notes
 - Lower-level tests in the Board module (analysis of winning lines) and the CompPlayer module (minimax algorithm) were deleted as they are now implicitly tested by the top-level functions.

@@ -29,7 +29,7 @@ defmodule TicTacToeTest do
                [make_move: &make_comp_move/2, mark: player_one_mark()],
                [make_move: &make_comp_move/2, mark: player_two_mark()]
              ]
-    
+
     assert allocate_mode(5) == :invalid_mode_choice
   end
 end

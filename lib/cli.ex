@@ -95,7 +95,10 @@ defmodule CLI do
   end
 
   def announce_win(mark) do
-    write_with_newlines(bright() <> italic() <> win_prompt(convert_mark(mark)) <> no_underline() <> normal() <> not_italic())
+    write_with_newlines(
+      bright() <>
+        italic() <> win_prompt(convert_mark(mark)) <> no_underline() <> normal() <> not_italic()
+    )
   end
 
   def announce_tie do
@@ -169,7 +172,6 @@ defmodule CLI do
 
     if converted_mark != :empty_mark do
       red() <> "[" <> converted_mark <> red() <> "]  " <> @default_colour
-      
     else
       format_number_tile(elem(tile_with_number, 1) + 1)
     end

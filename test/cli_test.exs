@@ -12,8 +12,8 @@ defmodule CLITest do
   end
 
   test "format marked board" do
-    assert format_board(marked_board_1()) == formatted_marked_3x3_1()
-    assert format_board(marked_board_2()) == formatted_marked_3x3_2()
+    assert format_board(marked_board_3x3()) == formatted_marked_3x3()
+    assert format_board(marked_board_4x4()) == formatted_marked_4x4()
   end
 
   test "cleans number" do
@@ -44,16 +44,12 @@ defmodule CLITest do
     assert send_yes_or_no("n") == :no
   end
 
-  def marked_board_1 do
+  def marked_board_3x3 do
     @empty_3x3 |> List.replace_at(2, player_one_mark()) |> List.replace_at(4, player_two_mark())
   end
 
-  def marked_board_2 do
-    @empty_3x3
-    |> List.replace_at(3, player_two_mark())
-    |> List.replace_at(4, player_one_mark())
-    |> List.replace_at(5, player_one_mark())
-    |> List.replace_at(8, player_two_mark())
+  def marked_board_4x4 do
+   @empty_4x4 |> List.replace_at(3, player_two_mark()) |> List.replace_at(8, player_one_mark())
   end
 
   def formatted_empty_3x3 do
@@ -64,11 +60,11 @@ defmodule CLITest do
     ~s{[1]  [2]  [3]  [4]  \r\n[5]  [6]  [7]  [8]  \r\n[9]  [10] [11] [12] \r\n[13] [14] [15] [16] }
   end
 
-  def formatted_marked_3x3_1 do
+  def formatted_marked_3x3 do
     ~s{[1]  [2]  [X]  \r\n[4]  [O]  [6]  \r\n[7]  [8]  [9]  }
   end
 
-  def formatted_marked_3x3_2 do
-    ~s{[1]  [2]  [3]  \r\n[O]  [X]  [X]  \r\n[7]  [8]  [O]  }
+  def formatted_marked_4x4 do
+    ~s{[1]  [2]  [3]  [O]  \r\n[5]  [6]  [7]  [8]  \r\n[X]  [10] [11] [12] \r\n[13] [14] [15] [16] }
   end
 end

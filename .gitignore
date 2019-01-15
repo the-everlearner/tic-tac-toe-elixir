@@ -16,6 +16,7 @@ erl_crash.dump
 /config/*.secret.exs
 .elixir_ls/
 erl_crash.dump
+tic_tac_toe
 
 ### Elixir Patch ###
 

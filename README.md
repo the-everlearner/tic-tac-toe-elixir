@@ -1,21 +1,31 @@
-# TicTacToe
+# Tic Tac Toe
+A command-line Tic Tac Toe game app written in Elixir.
 
-**TODO: Add description**
+### Setup
+1. Install [Elixir](https://elixir-lang.org/install.html)
 
-## Installation
+2. Clone this repo and cd in:
+	`$ git clone https://github.com/the-everlearner/tic_tac_toe.git`
+	`$ cd tic_tac_toe`
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `tic_tac_toe` to your list of dependencies in `mix.exs`:
+3. Fetch dependencies:
+	`$ mix deps.get`
 
-```elixir
-def deps do
-  [
-    {:tic_tac_toe, "~> 0.1.0"}
-  ]
-end
-```
+4. Test:
+	`$ mix test`
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/tic_tac_toe](https://hexdocs.pm/tic_tac_toe).
+### Play
+To play from the command line, build the escript then run the generated executable:
+	`$ mix escript.build`
+	`$ ./tic_tac_toe`
 
+### Features
+- Four game modes
+- Two board sizes
+- Unbeatable computer player 
+
+### Known Bugs
+- Unbeatable computer player is slow on 4x4 board
+
+### Notes
+- Lower-level tests in the Board module (analysis of winning lines) and the CompPlayer module (minimax algorithm) were deleted as they are now implicitly tested by the top-level functions.

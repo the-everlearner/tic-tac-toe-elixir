@@ -5,19 +5,24 @@ A command-line Tic Tac Toe game app written in Elixir.
 1. Install [Elixir](https://elixir-lang.org/install.html)
 
 2. Clone this repo and cd in:
+
 	`$ git clone https://github.com/the-everlearner/tic_tac_toe.git`
 
 	`$ cd tic_tac_toe`
 
 3. Fetch dependencies (enter 'y' to install Hex if required):
+
 	`$ mix deps.get`
 
 4. Test:
+
 	`$ mix test`
 
 ### Play
 To play from the command line, build the escript then run the generated executable:
+
 	`$ mix escript.build`
+
 	`$ ./tic_tac_toe`
 
 ### Features

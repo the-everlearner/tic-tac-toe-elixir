@@ -1,8 +1,11 @@
 defmodule CLI do
+  import IO
+  import IO.ANSI
   import Prompts
   import Board, only: [dimension: 1]
 
   @newline "\r\n"
+  @default_colour blue()
 
   def format_board(board) do
     Enum.map(Enum.with_index(board), &get_representation/1)
@@ -11,6 +14,7 @@ defmodule CLI do
   end
 
   def announce_welcome do
+    write(@default_colour)
     clear_screen()
     write_with_newlines(welcome_prompt())
     Process.sleep(1000)
@@ -91,7 +95,7 @@ defmodule CLI do
   end
 
   def announce_win(mark) do
-    write_with_newlines(win_prompt(convert_mark(mark)))
+    write_with_newlines(bright() <> italic() <> win_prompt(convert_mark(mark)) <> no_underline() <> normal() <> not_italic())
   end
 
   def announce_tie do
@@ -123,7 +127,7 @@ defmodule CLI do
   end
 
   defp write_with_newlines(phrase) do
-    IO.write(@newline <> phrase <> @newline)
+    write(@newline <> phrase <> @newline)
   end
 
   def clean_number(number) do
@@ -132,18 +136,18 @@ defmodule CLI do
 
   defp ask_for_input(message) do
     write_with_newlines(message)
-    IO.gets("")
+    gets("")
   end
 
   def clear_screen do
-    IO.write(IO.ANSI.clear())
+    write(clear())
   end
 
   defp convert_mark(mark) do
     case mark do
       :empty_mark -> :empty_mark
-      :player_one_mark -> "X"
-      :player_two_mark -> "O"
+      :player_one_mark -> magenta() <> "X" <> @default_colour
+      :player_two_mark -> yellow() <> "O" <> @default_colour
     end
   end
 
@@ -164,7 +168,8 @@ defmodule CLI do
     converted_mark = convert_mark(elem(tile_with_number, 0))
 
     if converted_mark != :empty_mark do
-      ~s{[#{converted_mark}]  }
+      red() <> "[" <> converted_mark <> red() <> "]  " <> @default_colour
+      
     else
       format_number_tile(elem(tile_with_number, 1) + 1)
     end
@@ -172,9 +177,9 @@ defmodule CLI do
 
   defp format_number_tile(number) do
     if number > 9 do
-      ~s{[#{number}] }
+      red() <> "[" <> to_string(number) <> "] " <> @default_colour
     else
-      ~s{[#{number}]  }
+      red() <> "[" <> to_string(number) <> "]  " <> @default_colour
     end
   end
 

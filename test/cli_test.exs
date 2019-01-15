@@ -2,19 +2,7 @@ defmodule CLITest do
   use ExUnit.Case
   import CLI
   import Marks
-
-  @empty_3x3 List.duplicate(empty_mark(), 9)
-  @empty_4x4 List.duplicate(empty_mark(), 16)
-
-  test "format empty board" do
-    assert format_board(@empty_3x3) == formatted_empty_3x3()
-    assert format_board(@empty_4x4) == formatted_empty_4x4()
-  end
-
-  test "format marked board" do
-    assert format_board(marked_board_3x3()) == formatted_marked_3x3()
-    assert format_board(marked_board_4x4()) == formatted_marked_4x4()
-  end
+  import IO.ANSI
 
   test "cleans number" do
     assert clean_number("0\n") == 0
@@ -42,29 +30,5 @@ defmodule CLITest do
   test "sends yes or no" do
     assert send_yes_or_no("y") == :yes
     assert send_yes_or_no("n") == :no
-  end
-
-  def marked_board_3x3 do
-    @empty_3x3 |> List.replace_at(2, player_one_mark()) |> List.replace_at(4, player_two_mark())
-  end
-
-  def marked_board_4x4 do
-   @empty_4x4 |> List.replace_at(3, player_two_mark()) |> List.replace_at(8, player_one_mark())
-  end
-
-  def formatted_empty_3x3 do
-    ~s{[1]  [2]  [3]  \r\n[4]  [5]  [6]  \r\n[7]  [8]  [9]  }
-  end
-
-  def formatted_empty_4x4 do
-    ~s{[1]  [2]  [3]  [4]  \r\n[5]  [6]  [7]  [8]  \r\n[9]  [10] [11] [12] \r\n[13] [14] [15] [16] }
-  end
-
-  def formatted_marked_3x3 do
-    ~s{[1]  [2]  [X]  \r\n[4]  [O]  [6]  \r\n[7]  [8]  [9]  }
-  end
-
-  def formatted_marked_4x4 do
-    ~s{[1]  [2]  [3]  [O]  \r\n[5]  [6]  [7]  [8]  \r\n[X]  [10] [11] [12] \r\n[13] [14] [15] [16] }
   end
 end

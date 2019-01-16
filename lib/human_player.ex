@@ -19,7 +19,7 @@ defmodule HumanPlayer do
     end
   end
 
-  def convert_to_board_position(input) do
+  defp convert_to_board_position(input) do
     input - 1
   end
 end

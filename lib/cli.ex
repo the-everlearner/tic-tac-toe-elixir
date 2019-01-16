@@ -1,11 +1,9 @@
 defmodule CLI do
-  import IO
-  import IO.ANSI
   import Prompts
   import Board, only: [dimension: 1]
 
   @newline "\r\n"
-  @default_colour blue()
+  @default_colour IO.ANSI.blue()
 
   def format_board(board) do
     Enum.map(Enum.with_index(board), &get_representation/1)
@@ -14,7 +12,7 @@ defmodule CLI do
   end
 
   def announce_welcome do
-    write(@default_colour)
+    IO.write(@default_colour)
     clear_screen()
     write_with_newlines(welcome_prompt())
     Process.sleep(1000)
@@ -96,8 +94,10 @@ defmodule CLI do
 
   def announce_win(mark) do
     write_with_newlines(
-      bright() <>
-        italic() <> win_prompt(convert_mark(mark)) <> no_underline() <> normal() <> not_italic()
+      IO.ANSI.bright() <>
+        IO.ANSI.italic() <>
+        win_prompt(convert_mark(mark)) <>
+        IO.ANSI.no_underline() <> IO.ANSI.normal() <> IO.ANSI.not_italic()
     )
   end
 
@@ -130,7 +130,7 @@ defmodule CLI do
   end
 
   defp write_with_newlines(phrase) do
-    write(@newline <> phrase <> @newline)
+    IO.write(@newline <> phrase <> @newline)
   end
 
   def clean_number(number) do
@@ -139,18 +139,18 @@ defmodule CLI do
 
   defp ask_for_input(message) do
     write_with_newlines(message)
-    gets("")
+    IO.gets("")
   end
 
   def clear_screen do
-    write(clear())
+    IO.write(IO.ANSI.clear())
   end
 
   defp convert_mark(mark) do
     case mark do
       :empty_mark -> :empty_mark
-      :player_one_mark -> magenta() <> "X" <> @default_colour
-      :player_two_mark -> yellow() <> "O" <> @default_colour
+      :player_one_mark -> IO.ANSI.magenta() <> "X" <> @default_colour
+      :player_two_mark -> IO.ANSI.yellow() <> "O" <> @default_colour
     end
   end
 
@@ -171,7 +171,7 @@ defmodule CLI do
     converted_mark = convert_mark(elem(tile_with_number, 0))
 
     if converted_mark != :empty_mark do
-      red() <> "[" <> converted_mark <> red() <> "]  " <> @default_colour
+      IO.ANSI.red() <> "[" <> converted_mark <> IO.ANSI.red() <> "]  " <> @default_colour
     else
       format_number_tile(elem(tile_with_number, 1) + 1)
     end
@@ -179,10 +179,14 @@ defmodule CLI do
 
   defp format_number_tile(number) do
     if number > 9 do
-      red() <> "[" <> to_string(number) <> "] " <> @default_colour
+      surround_number_tile(number, "")
     else
-      red() <> "[" <> to_string(number) <> "]  " <> @default_colour
+      surround_number_tile(number, " ")
     end
+  end
+
+  defp surround_number_tile(number, extra_space) do
+    IO.ANSI.red() <> "[" <> to_string(number) <> "] " <> extra_space <> @default_colour
   end
 
   defp insert_newlines(converted_tiles) do

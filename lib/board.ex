@@ -5,6 +5,10 @@ defmodule Board do
     List.duplicate(empty_mark(), grid_size * grid_size)
   end
 
+  def dimension(board) do
+    trunc(:math.sqrt(length(board)))
+  end
+
   def place_mark(board, position, mark) do
     List.replace_at(board, position, mark)
   end
@@ -29,10 +33,6 @@ defmodule Board do
     get_all_indices(board)
     |> get_all_marks(board)
     |> check_for_won_line(player_mark)
-  end
-
-  def dimension(board) do
-    trunc(:math.sqrt(length(board)))
   end
 
   def get_empty_tile_positions(board) do

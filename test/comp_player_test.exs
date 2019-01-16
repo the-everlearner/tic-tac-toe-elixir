@@ -1,7 +1,7 @@
 defmodule CompPlayerTest do
   use ExUnit.Case
-  import CompPlayer
   import Board, only: [make_initial_board: 1]
+  import CompPlayer
   import Marks
   Code.require_file("board_helper.exs", __DIR__)
 

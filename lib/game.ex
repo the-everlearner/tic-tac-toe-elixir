@@ -1,6 +1,6 @@
 defmodule Game do
-  import CLI, only: [introduce_game: 1, display_turn: 1, announce_win: 1, announce_tie: 0]
   import Board, only: [finished?: 2, won?: 2]
+  import CLI, only: [introduce_game: 1, display_turn: 1, announce_win: 1, announce_tie: 0]
 
   def run_game(initial_board, players) do
     introduce_game(initial_board)

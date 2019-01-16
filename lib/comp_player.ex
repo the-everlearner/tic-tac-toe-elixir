@@ -1,22 +1,22 @@
 defmodule CompPlayer do
-  import Marks
-
   import Board,
     only: [
-      place_mark: 3,
-      won?: 2,
-      get_empty_tile_positions: 1,
       finished?: 2,
+      get_empty_tile_positions: 1,
       get_max_depth: 1,
-      tile_occupied?: 2
+      place_mark: 3,
+      tile_occupied?: 2,
+      won?: 2
     ]
+
+  import Marks
 
   @tied_score 0
   @highest_alpha -1000
   @lowest_beta 1000
 
   def make_comp_move(board, player) do
-    if bigger_than_3x3?(board) && count_player_marks(board) < 6 do
+    if unbeatable_too_slow?(board) do
       place_mark(board, generate_random_move(board), player)
     else
       move = maximise(board, player, get_opponent(player), 0, @highest_alpha, @lowest_beta)[:move]
@@ -122,6 +122,10 @@ defmodule CompPlayer do
     else
       player_one_mark()
     end
+  end
+
+  defp unbeatable_too_slow?(board) do
+    bigger_than_3x3?(board) && count_player_marks(board) < 6
   end
 
   defp count_player_marks(board) do

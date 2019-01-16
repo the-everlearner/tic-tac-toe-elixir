@@ -1,8 +1,6 @@
 defmodule CLITest do
   use ExUnit.Case
   import CLI
-  import Marks
-  import IO.ANSI
 
   test "cleans number" do
     assert clean_number("0\n") == 0

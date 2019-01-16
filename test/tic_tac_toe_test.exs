@@ -1,9 +1,9 @@
 defmodule TicTacToeTest do
   use ExUnit.Case
-  import TicTacToe
-  import Marks
-  import HumanPlayer, only: [make_human_move: 2]
   import CompPlayer, only: [make_comp_move: 2]
+  import HumanPlayer, only: [make_human_move: 2]
+  import Marks
+  import TicTacToe
 
   test "allocate mode" do
     assert allocate_mode(1) ==

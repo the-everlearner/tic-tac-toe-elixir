@@ -1,20 +1,21 @@
 defmodule TicTacToe do
   import Board, only: [make_initial_board: 1]
-  import Game, only: [run_game: 2]
-  import Marks
-  import HumanPlayer, only: [make_human_move: 2]
-  import CompPlayer, only: [make_comp_move: 2]
 
   import CLI,
     only: [
-      announce_welcome: 0,
-      get_mode_choice: 0,
-      invalid_mode_choice: 0,
       announce_goodbye: 0,
-      ask_replay: 0,
+      announce_welcome: 0,
       ask_board_size: 0,
-      invalid_board_size_choice: 0
+      ask_replay: 0,
+      get_mode_choice: 0,
+      invalid_board_size_choice: 0,
+      invalid_mode_choice: 0
     ]
+
+  import CompPlayer, only: [make_comp_move: 2]
+  import Game, only: [run_game: 2]
+  import HumanPlayer, only: [make_human_move: 2]
+  import Marks
 
   @possible_board_sizes [3, 4]
 

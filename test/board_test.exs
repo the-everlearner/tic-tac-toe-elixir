@@ -7,6 +7,16 @@ defmodule BoardTest do
   @empty_3x3 List.duplicate(empty_mark(), 9)
   @empty_4x4 List.duplicate(empty_mark(), 16)
 
+  test "make initial board" do
+    assert make_initial_board(3) == @empty_3x3
+    assert make_initial_board(4) == @empty_4x4
+  end
+
+  test "get board dimension (as integer)" do
+    assert dimension(@empty_3x3) === 3
+    assert dimension(@empty_4x4) === 4
+  end
+
   test "whether position is in range" do
     assert in_range?(@empty_3x3, 0) == true
     assert in_range?(@empty_3x3, 8) == true
@@ -42,10 +52,6 @@ defmodule BoardTest do
     full_board = List.duplicate(player_one_mark(), 9)
 
     assert full?(full_board) == true
-  end
-
-  test "get board dimension (as integer)" do
-    assert dimension(@empty_3x3) === 3
   end
 
   test "returns false if board not won" do

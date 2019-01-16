@@ -1,11 +1,12 @@
 defmodule GameTest do
   use ExUnit.Case
   import ExUnit.CaptureIO
-  import Game
-  Code.require_file("board_helper.exs", __DIR__)
+
   import Board, only: [make_initial_board: 1]
+  import Game
   import Marks
   import TicTacToe, only: [get_players: 1]
+  Code.require_file("board_helper.exs", __DIR__)
 
   test "integration test that game runs ending with a 'won' message when comp player wins" do
     board = BoardHelper.generate_marked_board(make_initial_board(3), [0, 1], player_one_mark())
